@@ -249,7 +249,7 @@ namespace Valve.VR
         protected Coroutine rangeOfMotionBlendRoutine;
         protected Coroutine attachRoutine;
 
-        protected Transform[] bones;
+        public Transform[] bones {  get; protected set; }
 
         /// <summary>The range of motion that is set temporarily (call ResetTemporaryRangeOfMotion to reset to rangeOfMotion)</summary>
         protected EVRSkeletalMotionRange? temporaryRangeOfMotion = null;
