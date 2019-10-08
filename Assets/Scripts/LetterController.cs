@@ -16,36 +16,37 @@ public class LetterController : MonoBehaviour
         LetterScript = FloatingLetter.GetComponent<SimpleHelvetica>();
         ImageRenderer = FloatingImage.GetComponent<Renderer>();
 
-        StartCoroutine(ChangeTextAFewTimes());
+        //test function
+        //StartCoroutine(ChangeTextAFewTimes());
     }
 
-    private IEnumerator ChangeTextAFewTimes()
+    //test function
+    /**private IEnumerator ChangeTextAFewTimes()
     {
-        yield return new WaitForSeconds(5);
-        UpdateText('B');
-        UpdateImage('B');
-        yield return new WaitForSeconds(5);
-        UpdateText('C');
-        UpdateImage('C');
-        yield return new WaitForSeconds(5);
-        UpdateText('D');
-        UpdateImage('D');
-    }
-
-   public void UpdateText(char c)
+        yield return new WaitForSeconds(2);
+        Display('B');
+        yield return new WaitForSeconds(2);
+        Blank();
+        yield return new WaitForSeconds(2);
+        Display('C');
+        yield return new WaitForSeconds(2);
+        Display('D');
+    }*/
+    
+    public void Display(char c)
     {
         LetterScript.Text = c.ToString();
         LetterScript.GenerateText();
-    }
 
-    public void UpdateImage(char c)
-    {
+        ImageRenderer.enabled = true;
         ImageRenderer.material = Images[c - 'A'];
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Blank()
     {
-        
+        LetterScript.Text = "";
+        LetterScript.GenerateText();
+
+        ImageRenderer.enabled = false;
     }
 }

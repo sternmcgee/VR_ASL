@@ -6244,6 +6244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1540736341}
+  - component: {fileID: 1540736342}
   - component: {fileID: 1540736340}
   m_Layer: 0
   m_Name: LessonController
@@ -6273,6 +6274,28 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f8371cb9c1b94a747b930f215c517ecc, type: 2}
   - {fileID: 2100000, guid: 7b2f708755c4dea428dcf8fdb30b470f, type: 2}
   - {fileID: 2100000, guid: c90517d309fff974aa03aa100721c44d, type: 2}
+  - {fileID: 2100000, guid: eb303257a7daea04180563e33f2c4663, type: 2}
+  - {fileID: 2100000, guid: 5ed5b040f598141468f8190dc67143ae, type: 2}
+  - {fileID: 2100000, guid: 27db9a55225b60342a007dfebb20db72, type: 2}
+  - {fileID: 2100000, guid: 4bb6b067642c14c4d8a971b826704f96, type: 2}
+  - {fileID: 2100000, guid: d7b8dbbf53e6e7d4a9de20823d08c65f, type: 2}
+  - {fileID: 2100000, guid: a565d318047efb0409a7a340b7d3ce91, type: 2}
+  - {fileID: 2100000, guid: c76c7c0d80d6670459c14d828b4f6cd5, type: 2}
+  - {fileID: 2100000, guid: d0657180db4fb814fabde9a73586a080, type: 2}
+  - {fileID: 2100000, guid: 6190439a62cd94b4a9529da94017bd7e, type: 2}
+  - {fileID: 2100000, guid: caf67b48c2be76143abd2eca83698b7c, type: 2}
+  - {fileID: 2100000, guid: ee2b7e2200fe746478ef2abc2433e9a7, type: 2}
+  - {fileID: 2100000, guid: 8d46d10b244356b499eefa85c3af6c0f, type: 2}
+  - {fileID: 2100000, guid: dc8318f41cd4de44391dc3abed15fb6b, type: 2}
+  - {fileID: 2100000, guid: 619ec401802bda040a0f7456a3d5c198, type: 2}
+  - {fileID: 2100000, guid: 3c162398443903c439efab96bafca394, type: 2}
+  - {fileID: 2100000, guid: 3798aa7668bfc314d93b439ab9262bcc, type: 2}
+  - {fileID: 2100000, guid: 56f0a40e1d7925e4fa8e052730414bf0, type: 2}
+  - {fileID: 2100000, guid: 8df2a15cd490af6448bbaf66a95d3c52, type: 2}
+  - {fileID: 2100000, guid: 629a772b53b10014ab1393c97c6b9666, type: 2}
+  - {fileID: 2100000, guid: 6b77d2bb80c35dc4b94b5d6f97c03b91, type: 2}
+  - {fileID: 2100000, guid: 8170df2b07681a44bbf699e093d8a0cb, type: 2}
+  - {fileID: 2100000, guid: 98c5d2f7387d90448879048307b4a4d2, type: 2}
 --- !u!4 &1540736341
 Transform:
   m_ObjectHideFlags: 0
@@ -6287,6 +6310,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1540736342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540736339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29469aac9e1a0a48980f1d1fdb5300b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lessonPlan: 41004200
 --- !u!1 &1563224547
 GameObject:
   m_ObjectHideFlags: 0
