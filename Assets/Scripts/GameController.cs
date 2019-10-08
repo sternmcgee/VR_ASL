@@ -23,7 +23,8 @@ public class GameController : MonoBehaviour
             Debug.Log("Spawning letter");
             GameObject newLetter = Object.Instantiate(LetterPrefab);
             newLetter.GetComponent<SimpleHelvetica>().Text = AllLetters[Random.Range(0, AllLetters.Length)];
-            newLetter.transform.position = SpawnPoints[0].transform.position;
+            newLetter.GetComponent<SimpleHelvetica>().GenerateText();
+            newLetter.transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Length)].transform.position;
             newLetter.SetActive(true);
 
             yield return new WaitForSeconds(Random.Range(1.0f, 4.0f));
