@@ -17,42 +17,6 @@ public class EMM_AddCanvases : EditorWindow{
         }
     }
 
-    [MenuItem("EMM/Support!", false, 1)]
-    public static void BuyFullVersion()
-    {
-        GetWindow<EMM_AddCanvases>("Easy Main Menu");
-        GetWindow<EMM_AddCanvases>("Easy Main Menu").maxSize = new Vector2(265, 350);
-        GetWindow<EMM_AddCanvases>("Easy Main Menu").minSize = new Vector2(264, 350);
-
-    }
-
-    void OnGUI()
-    {
-        //EMM Logo
-        Texture t = (Texture) Resources.Load("EMM_img");
-
-        if (GUILayout.Button(t))
-        {
-            Application.OpenURL("http://u3d.as/W3m");
-        }
-
-        GUILayout.Label("", GUI.skin.horizontalSlider);
-
-        EditorGUILayout.HelpBox("Hi guys, If you liked this demo or you used this in any of your games, " +
-                                    "then consider buying the full version from here!", MessageType.Info);
-
-        if (GUILayout.Button("Buy Full Version [Asset Store]"))
-        {
-            Application.OpenURL("http://u3d.as/W3m");
-        }
-        if (GUILayout.Button("Buy Full Version [Sellfy Store - 20% OFF]"))
-        {
-            Application.OpenURL("https://sellfy.com/p/5ujr/");
-        }
-
-
-    }
-
     [MenuItem("EMM/Add/Loading Canvas &#L", false)]
     public static void AddLoadingCanvas()
     {
