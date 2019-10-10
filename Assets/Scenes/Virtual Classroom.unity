@@ -6322,7 +6322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29469aac9e1a0a48980f1d1fdb5300b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lessonPlan: 41004200
+  LessonPlan: 410042004300
 --- !u!1 &1563224547
 GameObject:
   m_ObjectHideFlags: 0

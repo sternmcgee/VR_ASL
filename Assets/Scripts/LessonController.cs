@@ -5,35 +5,29 @@ using UnityEngine;
 public class LessonController : MonoBehaviour
 {
     LetterController LetterDisplay;
-    public char[] lessonPlan;
-    
+    public char[] LessonPlan;
+    private int LessonIndex = 0;
+
 
     void Start()
     {
         LetterDisplay = this.GetComponent<LetterController>();
-
-        StartCoroutine(Lesson());
+        LetterDisplay.Display(LessonPlan[0]);
     }
 
 
-    private IEnumerator Lesson()
+    private void Update()
     {
-        foreach (char c in lessonPlan)
+        if(Input.GetKeyDown(LessonPlan[LessonIndex].ToString().ToLower()))
         {
-            yield return StartCoroutine(DisplayAndWait(c));
+            LessonIndex++;
+            if(LessonIndex < LessonPlan.Length)
+            {
+                LetterDisplay.Display(LessonPlan[LessonIndex]);
+            } else
+            {
+                
+            }
         }
-    }
-
-
-    private IEnumerator DisplayAndWait(char c)
-    {
-        LetterDisplay.Display(c);
-        string cstr = c.ToString().ToLower();
-        while(!Input.GetKeyDown(cstr))
-        {
-            yield return null;
-        }
-
-        Debug.Log("Pressed " + c);
     }
 }
