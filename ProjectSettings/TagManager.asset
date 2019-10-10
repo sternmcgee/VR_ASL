@@ -15,20 +15,20 @@ TagManager:
   - UI
   - 
   - 
+  - Hi5ThumbTail
+  - Hi5ThumbSecond
+  - Hi5ThumbOther
+  - Hi5OtherFingerTail
+  - Hi5OtherFingerSecond
+  - Hi5OtherFingerOther
+  - Hi5Palm
+  - Hi5ObjectGrasp
+  - Hi5Plane
+  - Hi5ObjectTigger
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Hi5PalmBlock
+  - Hi5PalmRigidbody
+  - Hi5FlyPinch
   - 
   - 
   - 
