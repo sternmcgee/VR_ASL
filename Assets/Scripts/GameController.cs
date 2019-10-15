@@ -6,24 +6,43 @@ public class GameController : MonoBehaviour
 {
 
     public GameObject LetterPrefab;
-    public GameObject[] SpawnPoints;
-    public string[] AllLetters;
+    public GameObject[] SpawnPoints;    //list of spawn points
+    public string[] AllLetters;     //list of letters to spawn
     public int NumSpawns;
-    // Start is called before the first frame update
+
+    private GameObject[] spawnedObjects;
+    private string[] spawnedLetters;
+
+    
     void Start()
     {
+        spawnedObjects = new GameObject[NumSpawns];
+        spawnedLetters = new string[NumSpawns];
+
+        Debug.Log(spawnedLetters[0]);
+
         StartCoroutine(RunGame());
     }
+
 
     private IEnumerator RunGame()
     {
         Debug.Log("Started");
         for(int i = 0; i<NumSpawns; i++)
         {
-            Debug.Log("Spawning letter");
+            //Debug.Log("Spawning letter");
+            //create letter
             GameObject newLetter = Object.Instantiate(LetterPrefab);
-            newLetter.GetComponent<SimpleHelvetica>().Text = AllLetters[Random.Range(0, AllLetters.Length)];
-            newLetter.GetComponent<SimpleHelvetica>().GenerateText();
+            spawnedObjects[i] = newLetter;
+            SimpleHelvetica newScript = newLetter.GetComponent<SimpleHelvetica>();
+            string letter = AllLetters[Random.Range(0, AllLetters.Length)];
+            newScript.Text = letter;
+            spawnedLetters[i] = letter;
+            newScript.GenerateText();
+
+            //add random drag and place on a spawn point
+            newScript.Drag = Random.Range(0.1f, 1.0f);
+            newScript.SetRigidbodyVariables();
             newLetter.transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Length)].transform.position;
             newLetter.SetActive(true);
 
@@ -33,9 +52,21 @@ public class GameController : MonoBehaviour
         yield return null;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        for(int i = 0; i < spawnedLetters.Length; i++)
+        {
+            string str = spawnedLetters[i];
+            if(str != null)
+            {
+                if(Input.GetKeyDown(str.ToLower()))
+                {
+                    Destroy(spawnedObjects[i]);
+                    spawnedLetters[i] = null;
+                    return;
+                }
+            }
+        }
     }
 }
