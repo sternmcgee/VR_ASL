@@ -16,7 +16,8 @@ public class MainMenuController : MonoBehaviour {
     public GameObject GamePanel;
     public GameObject ControlsPanel;
     public GameObject GfxPanel;
-    public GameObject LoadGamePanel;
+    //public GameObject LoadGamePanel;
+    public GameObject ChoosingGamePanel;
 
     // Use this for initialization
     void Start () {
@@ -68,7 +69,7 @@ public class MainMenuController : MonoBehaviour {
         GamePanel.SetActive(true);
         ControlsPanel.SetActive(false);
         GfxPanel.SetActive(false);
-        LoadGamePanel.SetActive(false);
+        ChoosingGamePanel.SetActive(false);
 
         //play anim for opening game options panel
         anim.Play("OptTweenAnim_on");
@@ -83,7 +84,7 @@ public class MainMenuController : MonoBehaviour {
         GamePanel.SetActive(false);
         ControlsPanel.SetActive(true);
         GfxPanel.SetActive(false);
-        LoadGamePanel.SetActive(false);
+        ChoosingGamePanel.SetActive(false);
 
         //play anim for opening game options panel
         anim.Play("OptTweenAnim_on");
@@ -98,7 +99,7 @@ public class MainMenuController : MonoBehaviour {
         GamePanel.SetActive(false);
         ControlsPanel.SetActive(false);
         GfxPanel.SetActive(true);
-        LoadGamePanel.SetActive(false);
+        ChoosingGamePanel.SetActive(false);
 
         //play anim for opening game options panel
         anim.Play("OptTweenAnim_on");
@@ -114,7 +115,7 @@ public class MainMenuController : MonoBehaviour {
         GamePanel.SetActive(false);
         ControlsPanel.SetActive(false);
         GfxPanel.SetActive(false);
-        LoadGamePanel.SetActive(true);
+        ChoosingGamePanel.SetActive(true);
 
         //play anim for opening game options panel
         anim.Play("OptTweenAnim_on");
