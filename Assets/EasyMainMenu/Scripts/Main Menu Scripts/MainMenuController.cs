@@ -18,6 +18,8 @@ public class MainMenuController : MonoBehaviour {
     public GameObject GfxPanel;
     //public GameObject LoadGamePanel;
     public GameObject ChoosingGamePanel;
+    public GameObject LectureTransition;
+    public GameObject FallingLetters;
 
     // Use this for initialization
     void Start () {
@@ -61,6 +63,57 @@ public class MainMenuController : MonoBehaviour {
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
         
+    }
+
+    public void openStartGameOptions_Lecture()
+    {
+        //enable respective panel
+        MainOptionsPanel.SetActive(false);
+        //StartGameOptionsPanel.SetActive(true);
+        LectureTransition.SetActive(true);
+
+        //play anim for opening main options panel
+        anim.Play("buttonTweenAnims_on");
+
+        //play click sfx
+        playClickSound();
+
+        //enable BLUR
+        //Camera.main.GetComponent<Animator>().Play("BlurOn");
+    }
+
+    public void openFallingLetters()
+    {
+        //enable respective panel
+        MainOptionsPanel.SetActive(false);
+        StartGameOptionsPanel.SetActive(false);
+        FallingLetters.SetActive(true);
+
+        //play anim for opening main options panel
+        anim.Play("buttonTweenAnims_on");
+
+        //play click sfx
+        playClickSound();
+
+        //enable BLUR
+        //Camera.main.GetComponent<Animator>().Play("BlurOn");
+    }
+
+    public void openLecture()
+    {
+        //enable respective panel
+        MainOptionsPanel.SetActive(false);
+        StartGameOptionsPanel.SetActive(true);
+        LectureTransition.SetActive(true);
+
+        //play anim for opening main options panel
+        anim.Play("buttonTweenAnims_on");
+
+        //play click sfx
+        playClickSound();
+
+        //enable BLUR
+        //Camera.main.GetComponent<Animator>().Play("BlurOn");
     }
 
     public void openOptions_Game()
@@ -109,7 +162,7 @@ public class MainMenuController : MonoBehaviour {
 
     }
 
-    public void openContinue_Load()
+    public void openStartGameOptions_Games()
     {
         //enable respective panel
         GamePanel.SetActive(false);
