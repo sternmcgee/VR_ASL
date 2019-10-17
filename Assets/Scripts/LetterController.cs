@@ -7,8 +7,8 @@ public class LetterController : MonoBehaviour
 
     public GameObject FloatingLetter;
     public GameObject FloatingImage;
-    public SimpleHelvetica LetterScript;
-    public Renderer ImageRenderer;
+    private SimpleHelvetica LetterScript;
+    private Renderer ImageRenderer;
     public Material[] Images;
     // Start is called before the first frame update
     void Start()
