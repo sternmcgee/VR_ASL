@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-
+    public GameObject popfx;
     public GameObject letterPrefab;
     public GameObject[] spawnPoints;    //list of spawn points
     public string[] allLetters;     //list of letters to spawn
@@ -70,7 +70,9 @@ public class GameController : MonoBehaviour
             {
                 if(Input.GetKeyDown(str.ToLower()))
                 {
-                    Destroy(spawnedObjects[i]);
+                    //Destroy(spawnedObjects[i]);
+                    StartCoroutine(Pop(spawnedObjects[i]));
+                    spawnedObjects[i] = null;
                     spawnedLetters[i] = null;
                     score += 1;
                     return;
@@ -87,9 +89,27 @@ public class GameController : MonoBehaviour
         {
             if(other.transform.root.gameObject == spawnedObjects[i])
             {
-                Destroy(spawnedObjects[i]);
+                //Destroy(spawnedObjects[i]);
+                StartCoroutine(Pop(spawnedObjects[i]));
+                spawnedObjects[i] = null;
                 spawnedLetters[i] = null;
             }
         }
+    }
+
+
+    private IEnumerator Pop(GameObject gameObject)
+    {
+        Transform letterTransform = gameObject.transform.GetChild(1);
+        Instantiate(popfx, letterTransform.position, letterTransform.rotation);
+
+        for(int i=2; i<6; i++)
+        {
+            letterTransform.localScale /= i;
+            //gameObject.transform.Translate(new Vector3(-1 / i, -1 / i, -1 / i));
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 }
