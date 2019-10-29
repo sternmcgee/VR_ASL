@@ -60,9 +60,11 @@ public class MainMenuController : MonoBehaviour {
         //play click sfx
         playClickSound();
 
+        Debug.Log("Start Game Go");
+
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
-        
+
     }
 
     public void openStartGameOptions_Lecture()
