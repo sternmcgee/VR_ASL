@@ -16,8 +16,8 @@ public class RingController : MonoBehaviour
         letterScript.GenerateText();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public char GetLetter()
     {
-        
+        return letter;
     }
 }
