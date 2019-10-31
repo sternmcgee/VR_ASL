@@ -20,6 +20,7 @@ public class MainMenuController : MonoBehaviour {
     public GameObject ChoosingGamePanel;
     public GameObject LectureTransition;
     public GameObject FallingLetters;
+    public GameObject ThrowingHands;
 
     // Use this for initialization
     void Start () {
@@ -90,6 +91,23 @@ public class MainMenuController : MonoBehaviour {
         MainOptionsPanel.SetActive(false);
         StartGameOptionsPanel.SetActive(false);
         FallingLetters.SetActive(true);
+
+        //play anim for opening main options panel
+        anim.Play("buttonTweenAnims_on");
+
+        //play click sfx
+        playClickSound();
+
+        //enable BLUR
+        //Camera.main.GetComponent<Animator>().Play("BlurOn");
+    }
+
+    public void openThrowingHands()
+    {
+        //enable respective panel
+        MainOptionsPanel.SetActive(false);
+        StartGameOptionsPanel.SetActive(false);
+        ThrowingHands.SetActive(true);
 
         //play anim for opening main options panel
         anim.Play("buttonTweenAnims_on");
