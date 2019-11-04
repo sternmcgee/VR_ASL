@@ -33,7 +33,7 @@ namespace Hi5_Interaction_Core
             {
                 mRecord.RecordGesture(Hi5_Glove_Gesture_Recognition_State.EIndexPoint);
                 mState = Hi5_Glove_Gesture_Recognition_State.EIndexPoint;
-                mHand.mVisibleHand.ChangeColor(Color.black);
+                mHand.mVisibleHand.ChangeColor(Color.blue);
             }
 
             else if (IsHandPlane())

@@ -7,9 +7,7 @@ using HI5;
 namespace Hi5_Interaction_Interface
 {
     public class Hi5_Interface_Hand : MonoBehaviour
-    {
-        private bool pinchStateDown = false;
-        private bool pinchStateUp = false;
+    {       
 
         protected Hi5_Hand_Visible_Hand mHand = null;
 		bool isRegister = false;
@@ -21,19 +19,6 @@ namespace Hi5_Interaction_Interface
                     mHand = gameObject.GetComponent<Hi5_Hand_Visible_Hand>();
                 return mHand;
             }
-        }
-
-        public bool GetPinchStateDown() { return pinchStateDown && !pinchStateUp; }
-        public bool GetPinchStateUp() 
-        {
-            if (pinchStateUp && !pinchStateDown)
-            {
-                pinchStateDown = false;
-                pinchStateUp = false;
-                return true;
-            }
-            else
-                return false;
         }
 
 		/**
@@ -61,16 +46,14 @@ namespace Hi5_Interaction_Interface
 							case E_Hand_State.EPinch:
 							case E_Hand_State.EPinch2:
 								state = E_Interface_Hand_State.EPinch;
-                                pinchStateDown = true;
-                                pinchStateUp = false;
+                                
 								break;
 							case E_Hand_State.ELift:
 								state = E_Interface_Hand_State.ELift;
 							break;
 							case E_Hand_State.ERelease:
 								state = E_Interface_Hand_State.ERelease;
-                                pinchStateDown = false;
-                                pinchStateUp = true;
+                                
 							break;
 						}
 						return state;

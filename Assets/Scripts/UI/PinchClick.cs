@@ -23,20 +23,4 @@ public class PinchClick : MonoBehaviour
     {
 
     }
-
-    public bool GetPinchStateDown()
-    {
-        if (leftHand.GetPinchStateDown() || rightHand.GetPinchStateDown())
-            return true;
-        else
-            return false;
-    }
-
-    public bool GetPinchStateUp()
-    {
-        if (leftHand.GetPinchStateUp() && rightHand.GetPinchStateUp())
-            return true;
-        else
-            return false;
-    }
 }

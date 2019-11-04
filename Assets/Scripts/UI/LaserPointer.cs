@@ -2,19 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Hi5_Interaction_Interface;
+using Hi5_Interaction_Core;
 using Valve.VR;
 
 namespace Hi5_Interaction_Interface
 {
     public class LaserPointer : MonoBehaviour
     {
-        public Hi5_Interface_Hand hand;
+        public Hi5_Glove_Interaction_Hand hand;
 
         public SteamVR_Behaviour_Pose pose;
 
         //public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.__actions_default_in_InteractUI;
-        public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
+        //public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
         public bool active = true;
         public Color color;
@@ -39,8 +39,8 @@ namespace Hi5_Interaction_Interface
             if (pose == null)
                 Debug.LogError("No SteamVR_Behaviour_Pose component found on this object");
 
-            if (interactWithUI == null)
-                Debug.LogError("No ui interaction action has been set on this component.");
+            //if (interactWithUI == null)
+            //    Debug.LogError("No ui interaction action has been set on this component.");
             if (hand == null)
                 Debug.LogError("No hi5 hand has been set on this component.");
 
@@ -138,7 +138,7 @@ namespace Hi5_Interaction_Interface
                 dist = hit.distance;
             }
 
-            if (bHit && hand.GetPinchStateUp())
+            if (bHit && hand.GetRecognitionState() == Hi5_Glove_Gesture_Recognition_State.EIndexPoint)
             {
                 PointerEventArgs argsClick = new PointerEventArgs();
                 argsClick.fromInputSource = pose.inputSource;
@@ -148,7 +148,7 @@ namespace Hi5_Interaction_Interface
                 OnPointerClick(argsClick);
             }
 
-            if (hand != null && hand.GetPinchStateDown())
+            if (hand != null && hand.GetRecognitionState() == Hi5_Glove_Gesture_Recognition_State.EIndexPoint)
             {
                 pointer.transform.localScale = new Vector3(thickness * 5f, thickness * 5f, dist);
                 pointer.GetComponent<MeshRenderer>().material.color = clickColor;
