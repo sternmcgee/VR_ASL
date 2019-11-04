@@ -63,7 +63,7 @@ public class GloveRecorder : MonoBehaviour
             }
             for (int j = 0; j < 4; ++j)
             {
-                data += boneRot[j].ToString();
+                data += "," + boneRot[j].ToString();
             }
         }
 
