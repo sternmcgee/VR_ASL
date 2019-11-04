@@ -30,7 +30,7 @@ public class GloveRecorder : MonoBehaviour
 
             for(int j = 0; i < 3; ++i)
             {
-                if(i == 0) { header += (Bones)i + "_pos" + cord[j]; }
+                if(j == 0) { header += (Bones)i + "_pos" + cord[j]; }
                 else { header += "," + (Bones)i + "_pos" + cord[j]; }
             }
             foreach(string s in cord)
