@@ -26,7 +26,7 @@ public class GloveRecorder : MonoBehaviour
 
         for(int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
         {
-            string[] cord = {"x", "y", "z", "w"};
+            string[] cord = {"x", "y", "z"};
 
             for(int j = 0; i < 3; ++i)
             {
@@ -35,7 +35,7 @@ public class GloveRecorder : MonoBehaviour
             }
             foreach(string s in cord)
             {
-                header += "," + "_quot" + (Bones)i + s;
+                header += "," + "_quad" + (Bones)i + s;
             }
         }
         header += ",gesture";
@@ -61,7 +61,7 @@ public class GloveRecorder : MonoBehaviour
                 if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
                 else { data += "," + bonePos[j].ToString(); }
             }
-            for (int j = 0; j < 4; ++j)
+            for (int j = 0; j < 3; ++j)
             {
                 data += "," + boneRot[j].ToString();
             }
