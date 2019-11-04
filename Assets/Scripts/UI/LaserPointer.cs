@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hi5_Interaction_Interface;
+using Valve.VR;
 
-namespace Valve.VR.Extras
+namespace Hi5_Interaction_Interface
 {
-    public class SteamVR_LaserPointer : MonoBehaviour
+    public class LaserPointer : MonoBehaviour
     {
+        public Hi5_Interface_Hand hand;
+
         public SteamVR_Behaviour_Pose pose;
 
         //public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.__actions_default_in_InteractUI;
@@ -34,10 +38,11 @@ namespace Valve.VR.Extras
                 pose = this.GetComponent<SteamVR_Behaviour_Pose>();
             if (pose == null)
                 Debug.LogError("No SteamVR_Behaviour_Pose component found on this object");
-            
+
             if (interactWithUI == null)
                 Debug.LogError("No ui interaction action has been set on this component.");
-            
+            if (hand == null)
+                Debug.LogError("No hi5 hand has been set on this component.");
 
             holder = new GameObject();
             holder.transform.parent = rayOrigin.transform;
@@ -89,7 +94,7 @@ namespace Valve.VR.Extras
                 PointerOut(this, e);
         }
 
-        
+
         private void Update()
         {
             if (!isActive)
@@ -133,7 +138,7 @@ namespace Valve.VR.Extras
                 dist = hit.distance;
             }
 
-            if (bHit && interactWithUI.GetStateUp(pose.inputSource))
+            if (bHit && hand.GetPinchStateUp())
             {
                 PointerEventArgs argsClick = new PointerEventArgs();
                 argsClick.fromInputSource = pose.inputSource;
@@ -143,7 +148,7 @@ namespace Valve.VR.Extras
                 OnPointerClick(argsClick);
             }
 
-            if (interactWithUI != null && interactWithUI.GetState(pose.inputSource))
+            if (hand != null && hand.GetPinchStateDown())
             {
                 pointer.transform.localScale = new Vector3(thickness * 5f, thickness * 5f, dist);
                 pointer.GetComponent<MeshRenderer>().material.color = clickColor;

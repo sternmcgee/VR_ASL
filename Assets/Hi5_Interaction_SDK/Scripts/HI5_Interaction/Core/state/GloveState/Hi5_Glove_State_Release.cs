@@ -7,6 +7,7 @@ namespace Hi5_Interaction_Core
 {
     public class Hi5_Glove_State_Release : Hi5_Glove_State_Base
     {
+        
 
         // Use this for initialization
         override public void Start()
@@ -26,7 +27,7 @@ namespace Hi5_Interaction_Core
 
 
 			if (mDecision.IsPinch ())
-			{
+			{                
 				return;
 			}
 
@@ -34,8 +35,8 @@ namespace Hi5_Interaction_Core
 
             {
 				if (mDecision.IsFlyPinch ())
-				{
-					return;
+				{                   
+                    return;
 				}
 
 
@@ -188,8 +189,8 @@ namespace Hi5_Interaction_Core
 //                       }
 //                  }
 				if (mDecision.IsPinch2 ())
-				{
-					return;
+				{                    
+                    return;
 				}
             }
 
