@@ -21,6 +21,7 @@ public class GloveRecorder : MonoBehaviour
     // Set up file for recording
     private void initializeWriter(Hand hand, Gesture gesture)
     {
+        recording = true;
         writer = new StreamWriter(dataPath + hand + "_" + gesture + "_" + DateTime.Now + ".csv");
         string header = "";
 
@@ -48,29 +49,32 @@ public class GloveRecorder : MonoBehaviour
     // Write hand data to csv file
     private void writeData(Hand hand, Gesture gesture)
     {
-        recording = true;
-        string data = "";
+        //recording = true;
 
-        for(int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+        // record gesture 100 times
+        for (int x = 0; x < 100; ++x)
         {
-            Vector3 bonePos = handSource.GetReceivedPosition(i, hand);
-            Vector3 boneRot = handSource.GetReceivedRotation(i, hand);
+            string data = "";
+            for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+            {
+                Vector3 bonePos = handSource.GetReceivedPosition(i, hand);
+                Vector3 boneRot = handSource.GetReceivedRotation(i, hand);
 
-            for(int j = 0; j < 3; ++j)
-            {
-                if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
-                else { data += "," + bonePos[j].ToString(); }
+                for (int j = 0; j < 3; ++j)
+                {
+                    if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
+                    else { data += "," + bonePos[j].ToString(); }
+                }
+                for (int j = 0; j < 3; ++j)
+                {
+                    data += "," + boneRot[j].ToString();
+                }
             }
-            for (int j = 0; j < 3; ++j)
-            {
-                data += "," + boneRot[j].ToString();
-            }
+            data += "," + gesture;
+            writer.WriteLine(data);
         }
 
-        data += "," + gesture;
-        writer.WriteLine(data);
         writer.Close();
-
         recording = false;
     }
 
