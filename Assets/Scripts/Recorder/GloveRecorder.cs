@@ -12,19 +12,20 @@ public class GloveRecorder : MonoBehaviour
     private enum Gesture { None, A, B, C, D, E, F, G, H, I, J, K, L,
                             M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z }
 
-    private HI5_Glove_TransformData_Interface Hands;
+    private HI5_Glove_TransformData_Interface handInterface;
 
     private StreamWriter writer;
 
     private bool recording = false;     // we may or may not need this, let's see how it reacts in Update()...
 
-    private string dataPath = "Assets/Scripts/Data/";
+    private string dataPath = "../Data/";
 
 
     // Set up file for recording
     private void initializeWriter(Hand hand, Gesture gesture)
     {
         recording = true;
+
         writer = new StreamWriter(dataPath + hand.ToString() + "_" + gesture.ToString() +
                                     "_" + DateTime.Now.ToString("MMddyyyyHHmmss") + ".csv");
         string header = "";
@@ -42,19 +43,23 @@ public class GloveRecorder : MonoBehaviour
             {
                 header += "," + "_quad" + (Hands.EHi5_Glove_TransformData_Bones)i + s;
             }
+            header += ",gesture";
+            writer.WriteLine(header);
         }
-        header += ",gesture";
-        writer.WriteLine(header);
 
-        writeData(hand, gesture);
+        writeData(hand, gesture, path);
     }
 
 
     // Write hand data to csv file
-    private void writeData(Hand hand, Gesture gesture)
+    private void writeData(Hand hand, Gesture gesture, string path)
     {
-        for (int x = 0; x < 100; ++x)
+        //recording = true;
+
+        // record gesture 100 times
+        using (writer = (File.Exists(path)) ? File.AppendText(path) : File.CreateText(path))
         {
+<<<<<<< HEAD
             string data = "";
             for (int i = 0; i < Enum.GetNames(typeof(Hands.EHi5_Glove_TransformData_Bones)).Length; ++i)
             {
@@ -78,8 +83,6 @@ public class GloveRecorder : MonoBehaviour
                     data += "," + Hands.GetLeftHandTransform()[(Hands.EHi5_Glove_TransformData_Bones)i].localRotation[j];
                 }
             }
-            data += "," + gesture;
-            writer.WriteLine(data);
         }
 
         writer.Close();
@@ -90,7 +93,7 @@ public class GloveRecorder : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        handInterface = HI5_Glove_TransformData_Interface.Instance;
     }
 
     // Update is called once per frame

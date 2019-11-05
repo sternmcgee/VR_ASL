@@ -89,6 +89,14 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean Hi5Pinch
+        {
+            get
+            {
+                return SteamVR_Actions.default_Hi5Pinch;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

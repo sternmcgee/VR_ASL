@@ -1,6 +1,7 @@
 ﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Valve.VR.Extras
 {
@@ -19,7 +20,7 @@ namespace Valve.VR.Extras
         public GameObject pointer;
         bool isActive = false;
         public bool addRigidBody = false;
-        public Transform reference;
+        public Transform rayOrigin;
         public event PointerEventHandler PointerIn;
         public event PointerEventHandler PointerOut;
         public event PointerEventHandler PointerClick;
@@ -39,7 +40,7 @@ namespace Valve.VR.Extras
             
 
             holder = new GameObject();
-            holder.transform.parent = this.transform;
+            holder.transform.parent = rayOrigin.transform;
             holder.transform.localPosition = Vector3.zero;
             holder.transform.localRotation = Quaternion.identity;
 
