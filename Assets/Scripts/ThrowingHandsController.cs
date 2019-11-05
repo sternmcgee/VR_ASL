@@ -13,7 +13,7 @@ public class ThrowingHandsController : MonoBehaviour
     public GameObject popfx;
     public Material[] images;
     public GameObject cube;
-    
+
 
     void Start()
     {
@@ -29,22 +29,28 @@ public class ThrowingHandsController : MonoBehaviour
             rings[i].GetComponent<RingController>().AssignLetter(allLetters[i]);
         }
 
-        SpawnCube('A');
+        SpawnCube(false);
     }
-    
-    public void IncreaseScore()
+
+    private void ThrowingHandsController_BinAction(bool correctBin)
     {
-        score++;
-        Debug.Log("Score: " + score);
+        throw new System.NotImplementedException();
     }
     
 
-    private void SpawnCube(char c)
+    public void SpawnCube(bool increaseScore)
     {
+        if(increaseScore)
+        {
+            score += 1;
+            Debug.Log("Score: " + score);
+        }
+
+        char nextLetter = allLetters[Random.Range(0,4)];
         GameObject newCube = Instantiate(cube);
         cube.transform.position = spawnPoint.transform.position;
 
-        newCube.GetComponent<HandCube>().AsssignLetter(c, images[c-'A'], this);
+        newCube.GetComponent<HandCube>().AsssignLetter(nextLetter, images[nextLetter-'A'], this);
     }
 
 
