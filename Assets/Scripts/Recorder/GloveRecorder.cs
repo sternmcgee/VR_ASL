@@ -18,7 +18,7 @@ public class GloveRecorder : MonoBehaviour
 
     private bool recording = false;     // we may or may not need this, let's see how it reacts in Update()...
 
-    private string dataPath = "../Data/";
+    private string dataPath = "Assets/Scripts/Data/";
 
 
     // Set up file for recording
