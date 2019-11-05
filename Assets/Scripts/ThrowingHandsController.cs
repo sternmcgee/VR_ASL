@@ -44,7 +44,7 @@ public class ThrowingHandsController : MonoBehaviour
 
         char nextLetter = allLetters[Random.Range(0,4)];
         GameObject newCube = Instantiate(cube);
-        newcube.transform.position = spawnPoint.transform.position;
+        newCube.transform.position = spawnPoint.transform.position;
 
         newCube.GetComponent<HandCube>().AsssignLetter(nextLetter, images[nextLetter-'A'], this);
     }
