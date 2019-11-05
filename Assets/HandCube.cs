@@ -22,18 +22,24 @@ public class HandCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        RingController ring = other.gameObject.GetComponent<RingController>();
-        if(ring != null)
+        if (other.gameObject.tag == "ring")
         {
-            if(ring.GetLetter() == letter)
+            Debug.Log("Hit ring trigger collider!");
+            RingController ring = other.gameObject.GetComponent<RingController>();
+            if (ring != null)
             {
-                controller.IncreaseScore();
-                Destroy(gameObject);
-            } else
-            {
-                Destroy(gameObject);
-            }
+                if (ring.GetLetter() == letter)
+                {
+                    Debug.Log("Correct answer!");
+                    controller.IncreaseScore();
+                    //Destroy(gameObject);
+                }
+                else
+                {
+                    Debug.Log("Wrong answer!");
+                }
 
+            }
         }
     }
 }

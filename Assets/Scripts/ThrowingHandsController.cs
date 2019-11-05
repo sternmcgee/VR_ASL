@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hi5_Interaction_Core;
 
 public class ThrowingHandsController : MonoBehaviour
 {
@@ -41,16 +42,24 @@ public class ThrowingHandsController : MonoBehaviour
 
     private void SpawnCube(char c)
     {
-        GameObject newCube = Instantiate(cube);
+        //GameObject newCube = Instantiate(cube);
         cube.transform.position = spawnPoint.transform.position;
 
-        newCube.GetComponent<HandCube>().AsssignLetter(c, images[c-'A'], this);
+        cube.GetComponent<HandCube>().AsssignLetter(c, images[c-'A'], this);
     }
 
 
     public void OnTriggerEnter(Collider other)
     {
-        other.transform.position = spawnPoint.transform.position;
-        other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        if (other.gameObject.layer == 13)
+        {
+            
+            Rigidbody rb = other.GetComponentInParent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            other.transform.parent.position = spawnPoint.transform.position;
+            other.transform.parent.rotation = spawnPoint.transform.rotation;
+        }
     }
 }
