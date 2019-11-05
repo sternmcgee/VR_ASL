@@ -22,56 +22,63 @@ public class GloveRecorder : MonoBehaviour
     private void initializeWriter(Hand hand, Gesture gesture)
     {
         recording = true;
-        writer = new StreamWriter(dataPath + hand + "_" + gesture + "_" + DateTime.Now + ".csv");
+        string path = dataPath + hand + "_" + gesture + "_" + DateTime.Now + ".csv";
+        //writer = new StreamWriter(dataPath + hand + "_" + gesture + "_" + DateTime.Now + ".csv");
         string header = "";
 
-        for(int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+        using (writer = (File.Exists(path)) ? File.AppendText(path) : File.CreateText(path))
         {
-            string[] cord = {"x", "y", "z"};
+            for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+            {
+                string[] cord = { "x", "y", "z" };
 
-            for(int j = 0; i < 3; ++i)
-            {
-                if(i == 0 && j == 0) { header += (Bones)i + "_pos" + cord[j]; }
-                else { header += "," + (Bones)i + "_pos" + cord[j]; }
+                for (int j = 0; i < 3; ++i)
+                {
+                    if (i == 0 && j == 0) { header += (Bones)i + "_pos" + cord[j]; }
+                    else { header += "," + (Bones)i + "_pos" + cord[j]; }
+                }
+                foreach (string s in cord)
+                {
+                    header += "," + "_quad" + (Bones)i + s;
+                }
             }
-            foreach(string s in cord)
-            {
-                header += "," + "_quad" + (Bones)i + s;
-            }
+            header += ",gesture";
+            writer.WriteLine(header);
         }
-        header += ",gesture";
-        writer.WriteLine(header);
 
-        writeData(hand, gesture);
+        writeData(hand, gesture, path);
     }
 
 
     // Write hand data to csv file
-    private void writeData(Hand hand, Gesture gesture)
+    private void writeData(Hand hand, Gesture gesture, string path)
     {
         //recording = true;
 
         // record gesture 100 times
-        for (int x = 0; x < 100; ++x)
+        using (writer = (File.Exists(path)) ? File.AppendText(path) : File.CreateText(path))
         {
-            string data = "";
-            for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+            for (int x = 0; x < 100; ++x)
             {
-                Vector3 bonePos = handSource.GetReceivedPosition(i, hand);
-                Vector3 boneRot = handSource.GetReceivedRotation(i, hand);
+                string data = "";
+                for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+                {
+                    Vector3 bonePos = handSource.GetReceivedPosition(i, hand);
+                    Vector3 boneRot = handSource.GetReceivedRotation(i, hand);
 
-                for (int j = 0; j < 3; ++j)
-                {
-                    if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
-                    else { data += "," + bonePos[j].ToString(); }
+                    for (int j = 0; j < 3; ++j)
+                    {
+                        if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
+                        else { data += "," + bonePos[j].ToString(); }
+                    }
+                    for (int j = 0; j < 3; ++j)
+                    {
+                        data += "," + boneRot[j].ToString();
+                    }
                 }
-                for (int j = 0; j < 3; ++j)
-                {
-                    data += "," + boneRot[j].ToString();
-                }
+                data += "," + gesture;
+                writer.WriteLine(data);
             }
-            data += "," + gesture;
-            writer.WriteLine(data);
         }
 
         writer.Close();
