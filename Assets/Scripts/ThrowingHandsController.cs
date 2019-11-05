@@ -14,7 +14,7 @@ public class ThrowingHandsController : MonoBehaviour
     public GameObject popfx;
     public Material[] images;
     public GameObject cube;
-    
+
 
     void Start()
     {
@@ -30,22 +30,23 @@ public class ThrowingHandsController : MonoBehaviour
             rings[i].GetComponent<RingController>().AssignLetter(allLetters[i]);
         }
 
-        SpawnCube('A');
-    }
-    
-    public void IncreaseScore()
-    {
-        score++;
-        Debug.Log("Score: " + score);
+        SpawnCube(false);
     }
     
 
-    private void SpawnCube(char c)
+    public void SpawnCube(bool increaseScore)
     {
-        //GameObject newCube = Instantiate(cube);
-        cube.transform.position = spawnPoint.transform.position;
+        if(increaseScore)
+        {
+            score += 1;
+            Debug.Log("Score: " + score);
+        }
 
-        cube.GetComponent<HandCube>().AsssignLetter(c, images[c-'A'], this);
+        char nextLetter = allLetters[Random.Range(0,4)];
+        GameObject newCube = Instantiate(cube);
+        newCube.transform.position = spawnPoint.transform.position;
+
+        newCube.GetComponent<HandCube>().AsssignLetter(nextLetter, images[nextLetter-'A'], this);
     }
 
 

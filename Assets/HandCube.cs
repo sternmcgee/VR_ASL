@@ -28,16 +28,7 @@ public class HandCube : MonoBehaviour
             RingController ring = other.gameObject.GetComponent<RingController>();
             if (ring != null)
             {
-                if (ring.GetLetter() == letter)
-                {
-                    Debug.Log("Correct answer!");
-                    controller.IncreaseScore();
-                    //Destroy(gameObject);
-                }
-                else
-                {
-                    Debug.Log("Wrong answer!");
-                }
+                controller.SpawnCube(ring.GetLetter() == letter);
 
             }
         }
