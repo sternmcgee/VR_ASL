@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using Unity;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using HI5;
 
@@ -16,7 +14,7 @@ public class GloveRecorder : MonoBehaviour
 
     private StreamWriter writer;
 
-    private bool recording = false;     // we may or may not need this, let's see how it reacts in Update()...
+    private bool recording = false;     // we may or may not need this, let's see how it reacts in Update...
 
     private string dataPath = "Assets/Scripts/Data/";
 
@@ -36,8 +34,14 @@ public class GloveRecorder : MonoBehaviour
 
             for (int j = 0; i < 3; ++i)
             {
-                if (i == 0 && j == 0) { header += (HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i + "_pos" + cord[j]; }
-                else { header += "," + (HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i + "_pos" + cord[j]; }
+                if (i == 0 && j == 0)
+                {
+                    header += (HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i + "_pos" + cord[j];
+                }
+                else
+                {
+                    header += "," + (HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i + "_pos" + cord[j];
+                }
             }
             foreach (string s in cord)
             {
@@ -54,31 +58,25 @@ public class GloveRecorder : MonoBehaviour
     // Write hand data to csv file
     private void writeData(Hand hand, Gesture gesture)
     {
-        //recording = true;
-
         // record gesture 100 times
         for( int x = 0; x < 100; ++x )
         {
             string data = "";
             for (int i = 0; i < Enum.GetNames(typeof(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)).Length; ++i)
             {
-                //Vector3 bonePos = Hands.GetReceivedPosition(i, hand);
-                //Vector3 boneRot = Hands.GetReceivedRotation(i, hand);
-
                 for (int j = 0; j < 3; ++j)
                 {
-                    //if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
-                    //else { data += "," + bonePos[j].ToString(); }
-
                     if (i == 0 && j == 0)
                     {
                         data += handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j];
                     }
-                    else { data += "," + handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]; }
+                    else
+                    {
+                        data += "," + handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j];
+                    }
                 }
                 for (int j = 0; j < 4; ++j)
                 {
-                    //data += "," + boneRot[j].ToString();
                     data += "," + handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j];
                 }
             }
