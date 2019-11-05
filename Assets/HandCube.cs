@@ -13,20 +13,24 @@ public class HandCube : MonoBehaviour
         spawnPoint = this.transform;
     }
 
-    public void AsssignLetter(char c, Material m, ThrowingHandsController thc)
+    public void AsssignLetter(char c, Material m, ThrowingHandsController con)
     {
         letter = c;
         GetComponent<Renderer>().material = m;
-        controller = thc;
+        controller = con;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        RingController ring = other.gameObject.GetComponent<RingController>();
-        if(ring != null)
+        if (other.gameObject.tag == "ring")
         {
-            controller.SpawnCube(ring.GetLetter() == letter);
+            Debug.Log("Hit ring trigger collider!");
+            RingController ring = other.gameObject.GetComponent<RingController>();
+            if (ring != null)
+            {
+                controller.SpawnCube(ring.GetLetter() == letter);
 
+            }
         }
     }
 }
