@@ -15,70 +15,61 @@ public class GloveRecorder : MonoBehaviour
 
     private bool recording = false;     // we may or may not need this, let's see how it reacts in Update()...
 
-    private string dataPath = "../Data/";
+    private string dataPath = "Assets/Scripts/Data/";
 
 
     // Set up file for recording
     private void initializeWriter(Hand hand, Gesture gesture)
     {
         recording = true;
-        string path = dataPath + hand + "_" + gesture + "_" + DateTime.Now + ".csv";
-        //writer = new StreamWriter(dataPath + hand + "_" + gesture + "_" + DateTime.Now + ".csv");
+        string path = dataPath + hand.ToString() + "_" + gesture.ToString() + "_" + DateTime.Now.ToString("MMddyyyyHHmmss") + ".csv";
+        writer = new StreamWriter(path);
         string header = "";
 
-        using (writer = (File.Exists(path)) ? File.AppendText(path) : File.CreateText(path))
+        for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
         {
-            for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
+            string[] cord = { "x", "y", "z" };
+
+            for (int j = 0; i < 3; ++i)
             {
-                string[] cord = { "x", "y", "z" };
-
-                for (int j = 0; i < 3; ++i)
-                {
-                    if (i == 0 && j == 0) { header += (Bones)i + "_pos" + cord[j]; }
-                    else { header += "," + (Bones)i + "_pos" + cord[j]; }
-                }
-                foreach (string s in cord)
-                {
-                    header += "," + "_quad" + (Bones)i + s;
-                }
+                if (i == 0 && j == 0) { header += (Bones)i + "_pos" + cord[j]; }
+                else { header += "," + (Bones)i + "_pos" + cord[j]; }
             }
-            header += ",gesture";
-            writer.WriteLine(header);
+            foreach (string s in cord)
+            {
+                header += "," + "_quad" + (Bones)i + s;
+            }
         }
+        header += ",gesture";
+        writer.WriteLine(header);
 
-        writeData(hand, gesture, path);
+        writeData(hand, gesture);
     }
 
 
     // Write hand data to csv file
-    private void writeData(Hand hand, Gesture gesture, string path)
+    private void writeData(Hand hand, Gesture gesture)
     {
-        //recording = true;
-
-        // record gesture 100 times
-        using (writer = (File.Exists(path)) ? File.AppendText(path) : File.CreateText(path))
+        for (int x = 0; x < 100; ++x)
         {
-            for (int x = 0; x < 100; ++x)
+            string data = "";
+            for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
             {
-                string data = "";
-                for (int i = 0; i < Enum.GetNames(typeof(Bones)).Length; ++i)
-                {
-                    Vector3 bonePos = handSource.GetReceivedPosition(i, hand);
-                    Vector3 boneRot = handSource.GetReceivedRotation(i, hand);
+                Vector3 bonePos = handSource.GetReceivedPosition(i, hand);
+                Vector3 boneRot = handSource.GetReceivedRotation(i, hand);
 
-                    for (int j = 0; j < 3; ++j)
-                    {
-                        if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
-                        else { data += "," + bonePos[j].ToString(); }
-                    }
-                    for (int j = 0; j < 3; ++j)
-                    {
-                        data += "," + boneRot[j].ToString();
-                    }
+                for (int j = 0; j < 3; ++j)
+                {
+                    if (i == 0 && j == 0) { data += bonePos[j].ToString(); }
+                    else { data += "," + bonePos[j].ToString(); }
                 }
-                data += "," + gesture;
-                writer.WriteLine(data);
+                for (int j = 0; j < 3; ++j)
+                {
+                    data += "," + boneRot[j].ToString();
+                }
             }
+            data += "," + gesture;
+            writer.WriteLine(data);
         }
 
         writer.Close();
