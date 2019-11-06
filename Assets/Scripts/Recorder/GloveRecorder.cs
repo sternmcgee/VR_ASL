@@ -28,7 +28,7 @@ public class GloveRecorder : MonoBehaviour
                                     "_" + DateTime.Now.ToString("MMddyyyyHHmmss") + ".csv");
         string header = "";
 
-        for (int i = 0; i < Enum.GetNames(typeof(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)).Length; ++i)
+        for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
         {
             string[] cord = { "x", "y", "z", "w" };
 
@@ -58,7 +58,7 @@ public class GloveRecorder : MonoBehaviour
     private void writeData(Hand hand, Gesture gesture)
     {
         // record gesture 100 times
-        for( int x = 0; x < 10; ++x )
+        for( int x = 0; x < 100; ++x )
         {
             string data = "";
             for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
