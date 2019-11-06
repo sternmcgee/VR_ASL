@@ -48,9 +48,8 @@ public class GloveRecorder : MonoBehaviour
                 header += "," + "_quad" + (HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i + s;
             }
             header += ",gesture";
-            writer.WriteLine(header);
         }
-
+        writer.WriteLine(header);
         writeData(hand, gesture);
     }
 
@@ -59,10 +58,10 @@ public class GloveRecorder : MonoBehaviour
     private void writeData(Hand hand, Gesture gesture)
     {
         // record gesture 100 times
-        for( int x = 0; x < 100; ++x )
+        for( int x = 0; x < 10; ++x )
         {
             string data = "";
-            for (int i = 0; i < Enum.GetNames(typeof(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)).Length; ++i)
+            for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
             {
                 for (int j = 0; j < 3; ++j)
                 {

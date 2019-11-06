@@ -43,24 +43,26 @@ public class ThrowingHandsController : MonoBehaviour
         }
 
         char nextLetter = allLetters[Random.Range(0,4)];
-        GameObject newCube = Instantiate(cube);
-        newCube.transform.position = spawnPoint.transform.position;
+        //cube.transform.position = spawnPoint.transform.position;
 
-        newCube.GetComponent<HandCube>().AsssignLetter(nextLetter, images[nextLetter-'A'], this);
+        cube.GetComponent<HandCube>().AsssignLetter(nextLetter, images[nextLetter-'A'], this);
     }
 
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 13)
+        if (other.gameObject.name == "Cube")
         {
-            
-            Rigidbody rb = other.GetComponentInParent<Rigidbody>();
+
+            Rigidbody rb = other.GetComponent<Rigidbody>();
             rb.isKinematic = true;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            other.transform.parent.position = spawnPoint.transform.position;
-            other.transform.parent.rotation = spawnPoint.transform.rotation;
+
+            other.gameObject.transform.parent = Hi5_Interaction_Object_Manager.GetObjectManager().transform;
+            other.transform.position = spawnPoint.transform.position;
+            other.transform.rotation = spawnPoint.transform.rotation;
+            rb.Sleep();
         }
     }
 }

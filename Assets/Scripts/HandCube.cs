@@ -18,19 +18,5 @@ public class HandCube : MonoBehaviour
         letter = c;
         GetComponent<Renderer>().material = m;
         controller = con;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "ring")
-        {
-            Debug.Log("Hit ring trigger collider!");
-            RingController ring = other.gameObject.GetComponent<RingController>();
-            if (ring != null)
-            {
-                controller.SpawnCube(ring.GetLetter() == letter);
-
-            }
-        }
-    }
+    }   
 }
