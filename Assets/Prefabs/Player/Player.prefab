@@ -8616,7 +8616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9297ec3429a9e4fb20943236d1ade8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVisibleLog: 1
+  isVisibleLog: 0
 --- !u!1 &2174208407554641738
 GameObject:
   m_ObjectHideFlags: 0
@@ -10059,7 +10059,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2656023283800646978}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 476a35a9196ebba4da99e71cdbb16ddb, type: 3}
   m_Name: 
@@ -10229,7 +10229,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2656023283800663408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 476a35a9196ebba4da99e71cdbb16ddb, type: 3}
   m_Name: 
@@ -10438,11 +10438,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2656023283800884214}
     m_Modifications:
-    - target: {fileID: 114738779948490528, guid: 8af0e1457b5e8d048ba063ddf7e60976,
-        type: 3}
-      propertyPath: mGlove_Hand
-      value: 
-      objectReference: {fileID: 1842355329}
+    - target: {fileID: 1666680736575926, guid: 8af0e1457b5e8d048ba063ddf7e60976, type: 3}
+      propertyPath: m_Name
+      value: HI5_Left_Human_Hand_Visible
+      objectReference: {fileID: 0}
     - target: {fileID: 4946251681544678, guid: 8af0e1457b5e8d048ba063ddf7e60976, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10475,6 +10474,23 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4946251681544678, guid: 8af0e1457b5e8d048ba063ddf7e60976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946251681544678, guid: 8af0e1457b5e8d048ba063ddf7e60976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946251681544678, guid: 8af0e1457b5e8d048ba063ddf7e60976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114738779948490528, guid: 8af0e1457b5e8d048ba063ddf7e60976,
+        type: 3}
+      propertyPath: mGlove_Hand
+      value: 
+      objectReference: {fileID: 1842355329}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8af0e1457b5e8d048ba063ddf7e60976, type: 3}
 --- !u!4 &4946251573317279 stripped
@@ -10502,11 +10518,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2656023283800884214}
     m_Modifications:
-    - target: {fileID: 114852731058483642, guid: d51f780e1fbb7c74a98d898b5608a167,
-        type: 3}
-      propertyPath: mGlove_Hand
-      value: 
-      objectReference: {fileID: 1769978706}
+    - target: {fileID: 1383005140677156, guid: d51f780e1fbb7c74a98d898b5608a167, type: 3}
+      propertyPath: m_Name
+      value: HI5_Right_Human_Hand_Visible
+      objectReference: {fileID: 0}
     - target: {fileID: 4869429709667446, guid: d51f780e1fbb7c74a98d898b5608a167, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10539,6 +10554,23 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4869429709667446, guid: d51f780e1fbb7c74a98d898b5608a167, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869429709667446, guid: d51f780e1fbb7c74a98d898b5608a167, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869429709667446, guid: d51f780e1fbb7c74a98d898b5608a167, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114852731058483642, guid: d51f780e1fbb7c74a98d898b5608a167,
+        type: 3}
+      propertyPath: mGlove_Hand
+      value: 
+      objectReference: {fileID: 1769978706}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d51f780e1fbb7c74a98d898b5608a167, type: 3}
 --- !u!4 &4869428549985306 stripped
