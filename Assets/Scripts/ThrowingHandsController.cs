@@ -8,8 +8,10 @@ public class ThrowingHandsController : MonoBehaviour
     public GameObject spawnPoint;
     public GameObject[] rings;
     public char[] allLetters;
+
     public int numSpawns;
     private int score;
+    private int cubeLetterIndex;
 
     public GameObject popfx;
     public Material[] images;
@@ -30,22 +32,39 @@ public class ThrowingHandsController : MonoBehaviour
             rings[i].GetComponent<RingController>().AssignLetter(allLetters[i]);
         }
 
-        SpawnCube(false);
+        cubeLetterIndex = Random.Range(0, 3);
+        cube.GetComponent<HandCube>().AsssignLetter(allLetters[cubeLetterIndex], images[allLetters[cubeLetterIndex] - 'A'], this);
     }
     
 
-    public void SpawnCube(bool increaseScore)
+    public void ResetCube(char ringLetter)
     {
-        if(increaseScore)
+        //move cube
+        Rigidbody rb = cube.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        cube.transform.position = spawnPoint.transform.position;
+        cube.transform.rotation = spawnPoint.transform.rotation;
+        rb.Sleep();
+
+
+        //spawn new cube
+        //GameObject oldCube = cube;
+        //cube = Instantiate(oldCube, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        //Destroy(oldCube);
+
+        if(ringLetter == allLetters[cubeLetterIndex])
         {
             score += 1;
             Debug.Log("Score: " + score);
+
+            int nextIndex = Random.Range(0, 3);
+            if(nextIndex == cubeLetterIndex) { nextIndex++; }
+            cubeLetterIndex = nextIndex;
+            cube.GetComponent<HandCube>().AsssignLetter(allLetters[cubeLetterIndex], images[allLetters[cubeLetterIndex]-'A'], this);
         }
-
-        char nextLetter = allLetters[Random.Range(0,4)];
-        //cube.transform.position = spawnPoint.transform.position;
-
-        cube.GetComponent<HandCube>().AsssignLetter(nextLetter, images[nextLetter-'A'], this);
+        
     }
 
 
@@ -53,16 +72,8 @@ public class ThrowingHandsController : MonoBehaviour
     {
         if (other.gameObject.name == "Cube")
         {
-
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-            rb.isKinematic = true;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-
-            other.gameObject.transform.parent = Hi5_Interaction_Object_Manager.GetObjectManager().transform;
-            other.transform.position = spawnPoint.transform.position;
-            other.transform.rotation = spawnPoint.transform.rotation;
-            rb.Sleep();
+            Debug.Log("Cube hit the controller");
+            ResetCube(ringLetter: '0');
         }
     }
 }

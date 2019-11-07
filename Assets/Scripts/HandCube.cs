@@ -18,5 +18,5 @@ public class HandCube : MonoBehaviour
         letter = c;
         GetComponent<Renderer>().material = m;
         controller = con;
-    }   
+    }
 }

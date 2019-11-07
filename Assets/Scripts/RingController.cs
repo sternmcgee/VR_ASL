@@ -9,6 +9,7 @@ public class RingController : MonoBehaviour
     private SimpleHelvetica letterScript;
     public ThrowingHandsController controller;
 
+
     public void AssignLetter(char c)
     {
         letter = c;
@@ -17,17 +18,13 @@ public class RingController : MonoBehaviour
         letterScript.GenerateText();
     }
 
-    public char GetLetter()
-    {
-        return letter;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Cube")
         {
-            Debug.Log("Hit ring trigger collider!");
-            controller.SpawnCube(GetLetter() == letter);
+            Debug.Log("Cube hit ring " + letter);
+            controller.ResetCube(ringLetter: letter);
         }
     }
 }
