@@ -47,8 +47,9 @@ public class GloveRecorder : MonoBehaviour
             {
                 header += "," + "_quad" + (HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i + s;
             }
-            header += ",gesture";
         }
+
+        header += ",gesture";
         writer.WriteLine(header);
         writeData(hand, gesture);
     }
