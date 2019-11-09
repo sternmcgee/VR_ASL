@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1272795001}
-  m_IndirectSpecularColor: {r: 0.17511046, g: 0.21907173, b: 0.30137092, a: 1}
+  m_IndirectSpecularColor: {r: 0.17511088, g: 0.21907213, b: 0.3013723, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -363,6 +363,11 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 916711864}
+    - target: {fileID: 9064127939592387847, guid: 7256fa6f94defc843aa1cd4ca4dab785,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de29e3f99653dd247b97b35181989291, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7256fa6f94defc843aa1cd4ca4dab785, type: 3}
 --- !u!1001 &281338682
@@ -375,6 +380,10 @@ PrefabInstance:
     - target: {fileID: 172848, guid: 62195c471d63e44979406f3701849c04, type: 3}
       propertyPath: m_Name
       value: Particle Effector Repel
+      objectReference: {fileID: 0}
+    - target: {fileID: 172848, guid: 62195c471d63e44979406f3701849c04, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 401786, guid: 62195c471d63e44979406f3701849c04, type: 3}
       propertyPath: m_LocalPosition.x
@@ -631,6 +640,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particle Effector Black Hole
       objectReference: {fileID: 0}
+    - target: {fileID: 140616, guid: 2ec64de70257b405b9ca2a4527e8c96a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 451482, guid: 2ec64de70257b405b9ca2a4527e8c96a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -871,6 +884,11 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 916711864}
+    - target: {fileID: 9064127939592387847, guid: 7256fa6f94defc843aa1cd4ca4dab785,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de29e3f99653dd247b97b35181989291, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7256fa6f94defc843aa1cd4ca4dab785, type: 3}
 --- !u!43 &741478195
@@ -1536,6 +1554,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particle Effector Attract
       objectReference: {fileID: 0}
+    - target: {fileID: 194918, guid: 61abdf7c996bd45f3a5dcc12664319f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 453606, guid: 61abdf7c996bd45f3a5dcc12664319f2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -1703,6 +1725,11 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 916711864}
+    - target: {fileID: 9064127939592387847, guid: 7256fa6f94defc843aa1cd4ca4dab785,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de29e3f99653dd247b97b35181989291, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7256fa6f94defc843aa1cd4ca4dab785, type: 3}
 --- !u!1 &1272795000
@@ -2255,5 +2282,10 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 916711864}
+    - target: {fileID: 9064127939592387847, guid: 7256fa6f94defc843aa1cd4ca4dab785,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de29e3f99653dd247b97b35181989291, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7256fa6f94defc843aa1cd4ca4dab785, type: 3}
