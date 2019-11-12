@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using HI5;
 using Accord.MachineLearning;
+using Accord.MachineLearning.VectorMachines;
 using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Statistics.Kernels;
 
@@ -25,11 +26,12 @@ public class GestureRecognizer : MonoBehaviour
     private enum Gesture { None, A, B, C, D, E, F, G, H, I, J, K, L,
                             M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z }
 
-    private HI5_Glove_TransformData_Interface gloveInterface;
+    private HI5_Glove_TransformData_Interface handInterface;
 
     // Methods for recognition
     private KNearestNeighbors knn;
-    private MultilabelSupportVectorLearning<Gaussian> svm;
+    private MultilabelSupportVectorMachine<Gaussian> svm;
+
 
     private string dataPath = "Assets/Scripts/Data/";
 
