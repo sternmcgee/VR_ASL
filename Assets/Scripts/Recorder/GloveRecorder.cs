@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿/* GloveRecorder.cs
+ *  VR_ASL
+ *
+ * This script records glove data for different gestures and puts them in a .csv file.
+ *
+ * AUTHORS: Jack Belcher, Jack Shirley, Stern McGee (put your name here if you edited it :) )
+ *
+ */
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.IO;
@@ -18,6 +27,8 @@ public class GloveRecorder : MonoBehaviour
 
     private string dataPath = "Assets/Scripts/Data/";
 
+    private int currentGesture = 0;     //gesture being recorded; start at Gesture.None
+
 
     // Set up file for recording
     private void initializeWriter(Hand hand, Gesture gesture)
@@ -25,7 +36,7 @@ public class GloveRecorder : MonoBehaviour
         recording = true;
 
         writer = new StreamWriter(dataPath + hand.ToString() + "_" + gesture.ToString() +
-                                    "_" + DateTime.Now.ToString("MMddyyyyHHmmss") + ".csv");
+                                    "_" + DateTime.Now.ToString("MMddyyyy_HHmmss") + ".csv");
         string header = "";
 
         for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
@@ -86,6 +97,7 @@ public class GloveRecorder : MonoBehaviour
         }
 
         writer.Close();
+        Debug.Log("Done recording.");
         recording = false;
     }
 
@@ -98,16 +110,52 @@ public class GloveRecorder : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if (Input.GetKeyDown(KeyCode.R))        //R for record
+    {
+        //int currentGesture = 0;     //maps to Gesture.None
+
+        //Used for changing the gesture being recorded
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if(currentGesture == 0)
+            {
+                Debug.Log("Already at begining of list. Current gesture: " + ((Gesture)currentGesture).ToString());
+            }
+            else
+            {
+                --currentGesture;
+                Debug.Log("Gesture back. Current gesture: " + ((Gesture)currentGesture).ToString());
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (currentGesture == Enum.GetValues(typeof(Gesture)).Length - 1)
+            {
+                Debug.Log("Already at end of list. Current gesture: " + ((Gesture)currentGesture).ToString());
+            }
+            else
+            {
+                ++currentGesture;
+                Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
+            }
+        }
+
+        // Used to initialize recording currentGesture on specified hand
+        else if (Input.GetKeyDown(KeyCode.R))        // Right hand
         {
             if (!recording)
             {
-                // JUST FOR TESTING; we'll add adjustments for specifiations
                 Hand hand = Hand.RIGHT;
-                Gesture gesture = Gesture.None;
-
-                initializeWriter(hand, gesture);
+                Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on right hand.");
+                initializeWriter(hand, (Gesture)currentGesture);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (!recording)
+            {
+                Hand hand = Hand.LEFT;
+                Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on left hand.");
+                initializeWriter(hand, (Gesture)currentGesture);
             }
         }
     }
