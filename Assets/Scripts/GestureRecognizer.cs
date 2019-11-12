@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿/* GestureRecognizer.cs
+ *  VR_ASL
+ *
+ * This script recognizes the gesture make by the player in-game in real-time.
+ * Uses Accord.Net machine learning framework to decide on gesture.
+ *
+ * AUTHORS: Jack Belcher, (put your name here if you edited it :) )
+ *
+ */
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,8 +27,6 @@ public class GestureRecognizer : MonoBehaviour
 
     private HI5_Glove_TransformData_Interface gloveInterface;
 
-    //private StreamReader reader;
-
     // Methods for recognition
     private KNearestNeighbors knn;
     private MultilabelSupportVectorLearning<Gaussian> svm;
@@ -31,6 +39,7 @@ public class GestureRecognizer : MonoBehaviour
     private static int knn_gesture;
     private static int svm_gesture;
 
+    //for access outside this class
     public int KNNgesture
     {
         get { return knn_gesture; }
@@ -77,6 +86,25 @@ public class GestureRecognizer : MonoBehaviour
         train_outputs = outputs.Select(x => (int)x).ToArray();      //tranform gestures into integers representations
     }
 
+    private double[] getHandData()
+    {
+        List<double> data = new List<double>();
+
+        for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
+        {
+            for (int j = 0; j < 3; ++j)
+            {
+                data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+            }
+            for (int j = 0; j < 4; ++j)
+            {
+                data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+            }
+        }
+
+        return data.ToArray();
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -103,29 +131,13 @@ public class GestureRecognizer : MonoBehaviour
     void Update()
     {
         // Get data from gloves
-        string data = "";
-        for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                if (i == 0 && j == 0)
-                {
-                    data += handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j];
-                }
-                else
-                {
-                    data += "," + handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j];
-                }
-            }
-            for (int j = 0; j < 4; ++j)
-            {
-                data += "," + handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j];
-            }
-        }
+        double[] data = getHandData();
+
+        /* Make sure we have collected data before we run this!!! */
 
         // Recognize gesture for knn
         knn_gesture = knn.Decide(data);
-        //Debug.Log("kNN gesture: " + knn_gesture);
+        Debug.Log("kNN gesture: " + knn_gesture);
 
         // Recognize gesture for svm
         foreach( Gesture gesture in Enum.GetValues(typeof(Gesture)) )
@@ -136,7 +148,7 @@ public class GestureRecognizer : MonoBehaviour
                 break;
             }
         }
-        //Debug.Log("SVM gesture: " + svm_gesture);
+        Debug.Log("SVM gesture: " + svm_gesture);
 
     }
 }
