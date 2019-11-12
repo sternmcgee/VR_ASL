@@ -16,8 +16,11 @@ using HI5;
 
 public class GloveRecorder : MonoBehaviour
 {
-    private enum Gesture { None, A, B, C, D, E, F, G, H, I, J, K, L,
-                            M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z }
+    private enum Gesture
+    {
+        None, A, B, C, D, E, F, G, H, I, J, K, L,
+        M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+    }
 
     private HI5_Glove_TransformData_Interface handInterface;
 
@@ -70,7 +73,7 @@ public class GloveRecorder : MonoBehaviour
     private void writeData(Hand hand, Gesture gesture)
     {
         // record gesture 100 times
-        for( int x = 0; x < 100; ++x )
+        for (int x = 0; x < 100; ++x)
         {
             string data = "";
             for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
@@ -114,9 +117,9 @@ public class GloveRecorder : MonoBehaviour
         //int currentGesture = 0;     //maps to Gesture.None
 
         //Used for changing the gesture being recorded
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if(currentGesture == 0)
+            if (currentGesture == 0)
             {
                 currentGesture = Enum.GetValues(typeof(Gesture)).Length - 1;
                 Debug.Log("Gesture loop. Current gesture: " + ((Gesture)currentGesture).ToString());
@@ -127,37 +130,37 @@ public class GloveRecorder : MonoBehaviour
                 Debug.Log("Gesture back. Current gesture: " + ((Gesture)currentGesture).ToString());
             }
         }
-        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (currentGesture == Enum.GetValues(typeof(Gesture)).Length - 1)
             {
                 currentGesture = 0;
                 Debug.Log("Gesture loop. Current gesture: " + ((Gesture)currentGesture).ToString());
-            {
-                ++currentGesture;
-                Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
+                {
+                    ++currentGesture;
+                    Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
+                }
             }
-        }
 
-        // Used to initialize recording currentGesture on specified hand
-        else if (Input.GetKeyDown(KeyCode.R))        // Right hand
-        {
-            if (!recording)
+            // Used to initialize recording currentGesture on specified hand
+            else if (Input.GetKeyDown(KeyCode.R))        // Right hand
             {
-                Hand hand = Hand.RIGHT;
-                Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on right hand.");
-                initializeWriter(hand, (Gesture)currentGesture);
+                if (!recording)
+                {
+                    Hand hand = Hand.RIGHT;
+                    Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on right hand.");
+                    initializeWriter(hand, (Gesture)currentGesture);
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (!recording)
+            else if (Input.GetKeyDown(KeyCode.L))
             {
-                Hand hand = Hand.LEFT;
-                Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on left hand.");
-                initializeWriter(hand, (Gesture)currentGesture);
+                if (!recording)
+                {
+                    Hand hand = Hand.LEFT;
+                    Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on left hand.");
+                    initializeWriter(hand, (Gesture)currentGesture);
+                }
             }
         }
     }
-
 }
