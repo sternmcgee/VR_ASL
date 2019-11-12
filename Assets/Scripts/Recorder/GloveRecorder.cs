@@ -118,7 +118,8 @@ public class GloveRecorder : MonoBehaviour
         {
             if(currentGesture == 0)
             {
-                Debug.Log("Already at begining of list. Current gesture: " + ((Gesture)currentGesture).ToString());
+                currentGesture = Enum.GetValues(typeof(Gesture)).Length - 1;
+                Debug.Log("Gesture loop. Current gesture: " + ((Gesture)currentGesture).ToString());
             }
             else
             {
@@ -130,9 +131,8 @@ public class GloveRecorder : MonoBehaviour
         {
             if (currentGesture == Enum.GetValues(typeof(Gesture)).Length - 1)
             {
-                Debug.Log("Already at end of list. Current gesture: " + ((Gesture)currentGesture).ToString());
-            }
-            else
+                currentGesture = 0;
+                Debug.Log("Gesture loop. Current gesture: " + ((Gesture)currentGesture).ToString());
             {
                 ++currentGesture;
                 Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
