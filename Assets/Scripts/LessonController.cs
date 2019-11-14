@@ -9,6 +9,7 @@ public class LessonController : MonoBehaviour
     private int lessonIndex;
     private char[] quizPlan;
     private int quizIndex;
+    private IEnumerator hint;
 
     enum LessonState
     {
@@ -17,6 +18,14 @@ public class LessonController : MonoBehaviour
         Quiz
     }
     LessonState state;
+
+
+    private IEnumerator Hint(char letter)
+    {
+        yield return new WaitForSeconds(5);
+        letterDisplay.Display(letter);
+    }
+
 
     void Start()
     {
@@ -30,17 +39,24 @@ public class LessonController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(lessonPlan[lessonIndex].ToString().ToLower()))
-        {
 
-            switch(state)
-            {
-                case LessonState.Lesson:
+        switch(state)
+        {
+            case LessonState.Lesson:
+                if(Input.GetKeyDown(lessonPlan[lessonIndex].ToString().ToLower()))
+                {
                     state = LessonState.Practice;
                     letterDisplay.TextOnly(lessonPlan[lessonIndex]);
-                    break;
-                case LessonState.Practice:
+                    hint = Hint(lessonPlan[lessonIndex]);
+                    StartCoroutine(hint);
+                }
+                break;
+            case LessonState.Practice:
+                if(Input.GetKeyDown(lessonPlan[lessonIndex].ToString().ToLower()))
+                {
+                    StopCoroutine(hint);
                     lessonIndex++;
+                    Debug.Log("Lesson index " + lessonIndex);
                     if(lessonIndex < lessonPlan.Length)
                     {
                         state = LessonState.Lesson;
@@ -50,9 +66,13 @@ public class LessonController : MonoBehaviour
                         state = LessonState.Quiz;
                         letterDisplay.TextOnly(quizPlan[quizIndex]);
                     }
-                    break;
-                case LessonState.Quiz:
+                }
+                break;
+            case LessonState.Quiz:
+                if(Input.GetKeyDown(quizPlan[quizIndex].ToString().ToLower()))
+                {
                     quizIndex++;
+                    Debug.Log("Quiz index " + quizIndex);
                     if(quizIndex < quizPlan.Length)
                     {
                         letterDisplay.TextOnly(quizPlan[quizIndex]);
@@ -60,8 +80,8 @@ public class LessonController : MonoBehaviour
                     {
                         letterDisplay.Blank();
                     }
-                    break;
-            }
+                }
+                break;
         }
     }
 
