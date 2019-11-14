@@ -15,23 +15,8 @@ public class LetterController : MonoBehaviour
     {
         LetterScript = FloatingLetter.GetComponent<SimpleHelvetica>();
         ImageRenderer = FloatingImage.GetComponent<Renderer>();
-
-        //test function
-        //StartCoroutine(ChangeTextAFewTimes());
     }
 
-    //test function
-    /**private IEnumerator ChangeTextAFewTimes()
-    {
-        yield return new WaitForSeconds(2);
-        Display('B');
-        yield return new WaitForSeconds(2);
-        Blank();
-        yield return new WaitForSeconds(2);
-        Display('C');
-        yield return new WaitForSeconds(2);
-        Display('D');
-    }*/
     
     public void Display(char c)
     {
@@ -42,9 +27,19 @@ public class LetterController : MonoBehaviour
         ImageRenderer.material = Images[c - 'A'];
     }
 
+
     public void Blank()
     {
         LetterScript.Text = "";
+        LetterScript.GenerateText();
+
+        ImageRenderer.enabled = false;
+    }
+
+
+    public void TextOnly(char c)
+    {
+        LetterScript.Text = c.ToString();
         LetterScript.GenerateText();
 
         ImageRenderer.enabled = false;
