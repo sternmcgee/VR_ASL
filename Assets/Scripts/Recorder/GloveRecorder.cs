@@ -64,6 +64,7 @@ public class GloveRecorder : MonoBehaviour
         }
 
         header += ",gesture";
+        Debug.Log("Done reading data.");
         writer.WriteLine(header);
         writeData(hand, gesture);
     }
@@ -100,6 +101,7 @@ public class GloveRecorder : MonoBehaviour
         }
 
         writer.Close();
+        Debug.Log("Done writing to file.");
         Debug.Log("Done recording.");
         recording = false;
     }
@@ -138,6 +140,7 @@ public class GloveRecorder : MonoBehaviour
                 Debug.Log("Gesture loop. Current gesture: " + ((Gesture)currentGesture).ToString());
             }
             else
+<<<<<<< HEAD
             {
                 ++currentGesture;
                 Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
@@ -149,6 +152,18 @@ public class GloveRecorder : MonoBehaviour
         {
             if (!recording)
             {
+=======
+            {
+                ++currentGesture;
+                Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
+            }
+        }
+        // Used to initialize recording currentGesture on specified hand
+        else if (Input.GetKeyDown(KeyCode.R))        // Right hand
+        {
+            if (!recording)
+            {
+>>>>>>> d83d0416d37965aa1915a0733c20ea170b3169ed
                 Hand hand = Hand.RIGHT;
                 Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on right hand.");
                 initializeWriter(hand, (Gesture)currentGesture);
