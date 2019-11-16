@@ -29,8 +29,8 @@ public class GestureRecognizer : MonoBehaviour
     private HI5_Glove_TransformData_Interface handInterface;
 
     // Methods for recognition
-    private KNearestNeighbors knn;
-    private MultilabelSupportVectorMachine<Gaussian> svm;
+    private KNearestNeighbors knn = null;
+    private MultilabelSupportVectorMachine<Gaussian> svm = null;
 
 
     private string dataPath = "Assets/Scripts/Data/";
@@ -132,12 +132,15 @@ public class GestureRecognizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (knn == null || svm == null)
+            return;
+
         // Get data from gloves
         double[] data = getHandData();
 
         /* Make sure we have collected data before we run this!!! */
 
-        // Recognize gesture for knn
+        // Recognize gesture for knn        
         knn_gesture = knn.Decide(data);
         Debug.Log("kNN gesture: " + knn_gesture);
 
