@@ -164,31 +164,7 @@ public class GestureRecognizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-=======
-        if (knn == null || svm == null)
-            return;
 
-        // Get data from gloves
-        double[] data = getHandData();
-
-        /* Make sure we have collected data before we run this!!! */
-
-        // Recognize gesture for knn        
-        knn_gesture = knn.Decide(data);
-        Debug.Log("kNN gesture: " + knn_gesture);
-
-        // Recognize gesture for svm
-        foreach( Gesture gesture in Enum.GetValues(typeof(Gesture)) )
-        {
-            if(svm.Decide(data, (int)gesture))
-            {
-                svm_gesture = (int)gesture;
-                break;
-            }
-        }
-        Debug.Log("SVM gesture: " + svm_gesture);
->>>>>>> d83d0416d37965aa1915a0733c20ea170b3169ed
-
+        
     }
 }
