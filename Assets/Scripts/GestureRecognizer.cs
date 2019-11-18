@@ -53,7 +53,7 @@ public class GestureRecognizer : MonoBehaviour
             using (var reader = new StreamReader(file))
             {
                 var header = reader.ReadLine();
-                while (!reader.EndOfStream)//
+                while (!reader.EndOfStream)
                 {
                     List<double> entry = new List<double>();
                     var line = reader.ReadLine();
@@ -79,7 +79,7 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get current hand sensor readings
-    private double[] getHandData()
+    private double[] getHandData(Hand hand)
     {
         List<double> data = new List<double>();
 
@@ -87,11 +87,25 @@ public class GestureRecognizer : MonoBehaviour
         {
             for (int j = 0; j < 3; ++j)
             {
-                data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+                if (hand == Hand.RIGHT)
+                {
+                    data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+                }
+                else
+                {
+                    data.Add(handInterface.GetLeftHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+                }
             }
             for (int j = 0; j < 4; ++j)
             {
-                data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+                if (hand == Hand.RIGHT)
+                {
+                    data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+                }
+                else
+                {
+                    data.Add(handInterface.GetLeftHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+                }
             }
         }
 
@@ -99,16 +113,16 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get current gesture (via kNN approach)
-    public int knnGetGesture()
+    public int knnGetGesture(Hand hand)
     {
-        double[] data = getHandData();
+        double[] data = getHandData(hand);
         return knn.Decide(data);
     }
 
     // Get current gesture (via SVM approach; lame)
-    public int svmGetGesture()
+    public int svmGetGesture(Hand hand)
     {
-        double[] data = getHandData();
+        double[] data = getHandData(hand);
         foreach(Gesture gesture in Enum.GetValues(typeof(Gesture)))
         {
             if(svm.Decide(data, (int)gesture))
@@ -120,7 +134,7 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get kNN decision response; return true if gesture matches
-    public bool knnIsGesutre(int gesture)
+    public bool knnIsGesutre(Hand hand, int gesture)
     {
         double[] data = getHandData();
 
@@ -132,10 +146,10 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get SVM  decision response; return true if gesture matches
-    public bool svmIsGesture(int gesture)
+    public bool svmIsGesture(Hand hand, int gesture)
     {
         double[] data = getHandData();
-        return svm.Decide(data, gesture);
+        return svm.Decide(data, (int)gesture);
     }
 
 
@@ -165,6 +179,5 @@ public class GestureRecognizer : MonoBehaviour
     void Update()
     {
 
-        
     }
 }
