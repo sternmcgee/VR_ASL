@@ -33,7 +33,7 @@ public class GestureRecognizer : MonoBehaviour
 
     // Methods for recognition
     private KNearestNeighbors knn = null;
-    private MultilabelSupportVectorMachine<Gaussian> svm = null;
+    private MultilabelSupportVectorMachine<Linear> svm = null;
 
     private string dataPath = "Assets/Scripts/Data/";
 
@@ -166,11 +166,11 @@ public class GestureRecognizer : MonoBehaviour
         knn.Learn(train_inputs, train_outputs);
         Debug.Log("Knn learning function finished!");
 
-        var teacher = new MultilabelSupportVectorLearning<Gaussian>()       // We could test different evaluation methods (Linear, etc.)
+        var teacher = new MultilabelSupportVectorLearning<Linear>()       // We could test different evaluation methods (Linear, etc.)
         {
-            Learner = (p) => new SequentialMinimalOptimization<Gaussian>()
+            Learner = (p) => new LinearDualCoordinateDescent()
             {
-                UseKernelEstimation = true
+                Loss = Loss.L2
             }
         };
 
@@ -180,6 +180,11 @@ public class GestureRecognizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // comment this out when not needed
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Debug.Log("kNN right gesture: " + (Gesture)knnGetGesture(Hand.RIGHT));
+            Debug.Log("SVM right gesture: " + (Gesture)svmGetGesture(Hand.RIGHT));
+        }        
     }
 }
