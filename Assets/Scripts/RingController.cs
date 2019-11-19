@@ -21,10 +21,11 @@ public class RingController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Cube")
+        if (other.name == "Cube")
         {
             Debug.Log("Cube hit ring " + letter);
             controller.ResetCube(ringLetter: letter);
+            
         }
     }
 }
