@@ -43,7 +43,7 @@ public class ThrowingHandsController : MonoBehaviour
 
     public void Update()
     {
-        scoreDisplay.Text = "Score:\n   " + score + "/" + numSpawns;
+        scoreDisplay.Text = "SCORE:\n" + score + "/" + numSpawns;
         scoreDisplay.GenerateText();
     }
 
