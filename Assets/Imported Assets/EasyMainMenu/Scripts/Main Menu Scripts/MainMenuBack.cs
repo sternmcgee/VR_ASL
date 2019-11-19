@@ -9,7 +9,7 @@ public class MainMenuBack : MonoBehaviour
 
     void Start()
     {
-        
+        MainMenuTransition.SetActive(false);
     }
 
     // Update is called once per frame
