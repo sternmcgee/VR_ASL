@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: c09f4b0b2a9226946aa44a3dd8ffdfa6
   - enabled: 1
@@ -14,10 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Virtual Classroom.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu5.unity
     guid: f098d750bd128b14e8717bfde9f5f131
   - enabled: 1
     path: Assets/Scenes/Throwing Hands.unity
     guid: dad654bc71ed14945a0f2c30632857c9
+  - enabled: 1
+    path: Assets/Scenes/MainMenu7.unity
+    guid: a26a03d684666f84f806f36825953139
+  - enabled: 1
+    path: Assets/Scenes/Calibration.unity
+    guid: fd313b37da947c74e8d35acae8e68869
   m_configObjects: {}

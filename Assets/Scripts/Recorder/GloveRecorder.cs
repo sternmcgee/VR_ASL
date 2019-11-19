@@ -64,6 +64,7 @@ public class GloveRecorder : MonoBehaviour
         }
 
         header += ",gesture";
+        Debug.Log("Done reading data.");
         writer.WriteLine(header);
         writeData(hand, gesture);
     }
@@ -100,6 +101,7 @@ public class GloveRecorder : MonoBehaviour
         }
 
         writer.Close();
+        Debug.Log("Done writing to file.");
         Debug.Log("Done recording.");
         recording = false;
     }
@@ -136,30 +138,30 @@ public class GloveRecorder : MonoBehaviour
             {
                 currentGesture = 0;
                 Debug.Log("Gesture loop. Current gesture: " + ((Gesture)currentGesture).ToString());
-                {
-                    ++currentGesture;
-                    Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
-                }
             }
-
-            // Used to initialize recording currentGesture on specified hand
-            else if (Input.GetKeyDown(KeyCode.R))        // Right hand
+            else
             {
-                if (!recording)
-                {
-                    Hand hand = Hand.RIGHT;
-                    Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on right hand.");
-                    initializeWriter(hand, (Gesture)currentGesture);
-                }
+                ++currentGesture;
+                Debug.Log("Gesture forward. Current gesture: " + ((Gesture)currentGesture).ToString());
             }
-            else if (Input.GetKeyDown(KeyCode.L))
+        }
+        // Used to initialize recording currentGesture on specified hand
+        else if (Input.GetKeyDown(KeyCode.R))        // Right hand
+        {
+            if (!recording)
             {
-                if (!recording)
-                {
-                    Hand hand = Hand.LEFT;
-                    Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on left hand.");
-                    initializeWriter(hand, (Gesture)currentGesture);
-                }
+                Hand hand = Hand.RIGHT;
+                Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on right hand.");
+                initializeWriter(hand, (Gesture)currentGesture);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (!recording)
+            {
+                Hand hand = Hand.LEFT;
+                Debug.Log("Recording " + ((Gesture)currentGesture).ToString() + " on left hand.");
+                initializeWriter(hand, (Gesture)currentGesture);
             }
         }
     }

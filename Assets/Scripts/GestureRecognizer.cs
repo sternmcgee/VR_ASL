@@ -23,36 +23,25 @@ using Accord.Statistics.Kernels;
 
 public class GestureRecognizer : MonoBehaviour
 {
-    private enum Gesture { None, A, B, C, D, E, F, G, H, I, J, K, L,
-                            M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z }
+    private enum Gesture
+    {
+        None, A, B, C, D, E, F, G, H, I, J, K, L,
+        M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+    }
 
     private HI5_Glove_TransformData_Interface handInterface;
 
     // Methods for recognition
-    private KNearestNeighbors knn;
-    private MultilabelSupportVectorMachine<Gaussian> svm;
-
+    private KNearestNeighbors knn = null;
+    private MultilabelSupportVectorMachine<Gaussian> svm = null;
 
     private string dataPath = "Assets/Scripts/Data/";
 
     private static double[][] train_inputs;
     private static int[] train_outputs;
 
-    private static int knn_gesture;
-    private static int svm_gesture;
 
-    //for access outside this class
-    public int KNNgesture
-    {
-        get { return knn_gesture; }
-    }
-    public int SVMgesture
-    {
-        get { return svm_gesture; }
-    }
-
-
-    //Read training data into train_input and train_output
+    // Read training data into train_input and train_output
     private static void readData(string path)
     {
         List<List<double>> inputs = new List<List<double>>();
@@ -63,6 +52,7 @@ public class GestureRecognizer : MonoBehaviour
         {
             using (var reader = new StreamReader(file))
             {
+                var header = reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
                     List<double> entry = new List<double>();
@@ -76,7 +66,7 @@ public class GestureRecognizer : MonoBehaviour
 
                     inputs.Add(entry);
 
-                    //parse gesture and add to list
+                    // parse gesture and add to list
                     Gesture gesture;
                     Enum.TryParse(values[values.Length - 1], out gesture);
                     outputs.Add(gesture);
@@ -88,7 +78,8 @@ public class GestureRecognizer : MonoBehaviour
         train_outputs = outputs.Select(x => (int)x).ToArray();      //tranform gestures into integers representations
     }
 
-    private double[] getHandData()
+    // Get current hand sensor readings
+    private double[] getHandData(Hand hand)
     {
         List<double> data = new List<double>();
 
@@ -96,16 +87,71 @@ public class GestureRecognizer : MonoBehaviour
         {
             for (int j = 0; j < 3; ++j)
             {
-                data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+                if (hand == Hand.RIGHT)
+                {
+                    data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+                }
+                else
+                {
+                    data.Add(handInterface.GetLeftHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localPosition[j]);
+                }
             }
             for (int j = 0; j < 4; ++j)
             {
-                data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+                if (hand == Hand.RIGHT)
+                {
+                    data.Add(handInterface.GetRightHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+                }
+                else
+                {
+                    data.Add(handInterface.GetLeftHandTransform()[(HI5_Glove_TransformData_Interface.EHi5_Glove_TransformData_Bones)i].localRotation[j]);
+                }
             }
         }
 
         return data.ToArray();
     }
+
+    // Get current gesture (via kNN approach)
+    public int knnGetGesture(Hand hand)
+    {
+        double[] data = getHandData(hand);
+        return knn.Decide(data);
+    }
+
+    // Get current gesture (via SVM approach; lame)
+    public int svmGetGesture(Hand hand)
+    {
+        double[] data = getHandData(hand);
+        foreach(Gesture gesture in Enum.GetValues(typeof(Gesture)))
+        {
+            if(svm.Decide(data, (int)gesture))
+            {
+                return (int)gesture;
+            }
+        }
+        return 0;       // return 'None' if nothing works
+    }
+
+    // Get kNN decision response; return true if gesture matches
+    public bool knnIsGesutre(Hand hand, int gesture)
+    {
+        double[] data = getHandData(hand);
+
+        if (gesture == knn.Decide(data))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // Get SVM  decision response; return true if gesture matches
+    public bool svmIsGesture(Hand hand, int gesture)
+    {
+        double[] data = getHandData(hand);
+        return svm.Decide(data, (int)gesture);
+    }
+
 
     // Use this for initialization
     void Start()
@@ -114,11 +160,11 @@ public class GestureRecognizer : MonoBehaviour
 
         readData(dataPath);
 
-        //set up and train recognizer(s)
-        knn = new KNearestNeighbors(k: 9);      //TEST FOR K
+        // Set up and train recognizer(s)
+        knn = new KNearestNeighbors(k: 9);      // TEST FOR K!!!
         knn.Learn(train_inputs, train_outputs);
 
-        var teacher = new MultilabelSupportVectorLearning<Gaussian>()
+        var teacher = new MultilabelSupportVectorLearning<Gaussian>()       // We could test different evaluation methods (Linear, etc.)
         {
             Learner = (p) => new SequentialMinimalOptimization<Gaussian>()
             {
@@ -132,25 +178,6 @@ public class GestureRecognizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get data from gloves
-        double[] data = getHandData();
-
-        /* Make sure we have collected data before we run this!!! */
-
-        // Recognize gesture for knn
-        knn_gesture = knn.Decide(data);
-        Debug.Log("kNN gesture: " + knn_gesture);
-
-        // Recognize gesture for svm
-        foreach( Gesture gesture in Enum.GetValues(typeof(Gesture)) )
-        {
-            if(svm.Decide(data, (int)gesture))
-            {
-                svm_gesture = (int)gesture;
-                break;
-            }
-        }
-        Debug.Log("SVM gesture: " + svm_gesture);
 
     }
 }
