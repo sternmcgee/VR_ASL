@@ -6,10 +6,13 @@ using Hi5_Interaction_Core;
 public class ThrowingHandsController : MonoBehaviour
 {
     public GameObject spawnPoint;
+    public GameObject scoreObject;
+    private SimpleHelvetica scoreDisplay;
     public GameObject[] rings;
     public char[] allLetters;
 
     public int numSpawns;
+    private int spawns = 0;
     private int score;
     private int cubeLetterIndex;
 
@@ -21,6 +24,7 @@ public class ThrowingHandsController : MonoBehaviour
     void Start()
     {
         score = 0;
+        scoreDisplay = scoreObject.GetComponent<SimpleHelvetica>();
 
         if(allLetters.Length > 4)
         {
@@ -32,10 +36,17 @@ public class ThrowingHandsController : MonoBehaviour
             rings[i].GetComponent<RingController>().AssignLetter(allLetters[i]);
         }
 
-        cubeLetterIndex = Random.Range(0, 3);
-        cube.GetComponent<HandCube>().AsssignLetter(allLetters[cubeLetterIndex], images[allLetters[cubeLetterIndex] - 'A'], this);
+        cubeLetterIndex = Random.Range(0, 4);
+        cube.GetComponent<HandCube>().AssignLetter(allLetters[cubeLetterIndex], images[allLetters[cubeLetterIndex] - 'A'], this);
     }
-    
+
+
+    public void Update()
+    {
+        scoreDisplay.Text = "SCORE:\n" + score + "/" + numSpawns;
+        scoreDisplay.GenerateText();
+    }
+
 
     public void ResetCube(char ringLetter)
     {
@@ -54,26 +65,35 @@ public class ThrowingHandsController : MonoBehaviour
         //cube = Instantiate(oldCube, spawnPoint.transform.position, spawnPoint.transform.rotation);
         //Destroy(oldCube);
 
-        if(ringLetter == allLetters[cubeLetterIndex])
+        if(ringLetter != '-')
         {
-            score += 1;
-            Debug.Log("Score: " + score);
+            if(ringLetter == allLetters[cubeLetterIndex])
+            {
+                score += 1;
+            }
+            //Debug.Log("Score: " + score);
+            spawns++;
+            if(spawns >= numSpawns)
+            {
+                cube.SetActive(false);
+            }
 
             int nextIndex = Random.Range(0, 3);
-            if(nextIndex == cubeLetterIndex) { nextIndex++; }
+            if(nextIndex == cubeLetterIndex) { nextIndex = 3; }
             cubeLetterIndex = nextIndex;
-            cube.GetComponent<HandCube>().AsssignLetter(allLetters[cubeLetterIndex], images[allLetters[cubeLetterIndex]-'A'], this);
+            Debug.Log("Changing to letter " + allLetters[cubeLetterIndex]);
+            Debug.Log("Total spawns: " + spawns);
+            cube.GetComponent<HandCube>().AssignLetter(allLetters[cubeLetterIndex], images[allLetters[cubeLetterIndex] - 'A'], this);
         }
-        
     }
 
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Cube")
+        if (other.name == "Cube")
         {
             Debug.Log("Cube hit the controller");
-            ResetCube(ringLetter: '0');
+            ResetCube(ringLetter: '-');
         }
     }
 }

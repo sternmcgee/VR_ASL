@@ -13,7 +13,7 @@ public class HandCube : MonoBehaviour
         spawnPoint = this.transform;
     }
 
-    public void AsssignLetter(char c, Material m, ThrowingHandsController con)
+    public void AssignLetter(char c, Material m, ThrowingHandsController con)
     {
         letter = c;
         GetComponent<Renderer>().material = m;
