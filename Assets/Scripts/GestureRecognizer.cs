@@ -136,7 +136,7 @@ public class GestureRecognizer : MonoBehaviour
     // Get kNN decision response; return true if gesture matches
     public bool knnIsGesutre(Hand hand, int gesture)
     {
-        double[] data = getHandData();
+        double[] data = getHandData(hand);
 
         if (gesture == knn.Decide(data))
         {
@@ -148,7 +148,7 @@ public class GestureRecognizer : MonoBehaviour
     // Get SVM  decision response; return true if gesture matches
     public bool svmIsGesture(Hand hand, int gesture)
     {
-        double[] data = getHandData();
+        double[] data = getHandData(hand);
         return svm.Decide(data, (int)gesture);
     }
 
