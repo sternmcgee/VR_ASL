@@ -161,8 +161,10 @@ public class GestureRecognizer : MonoBehaviour
         readData(dataPath);
 
         // Set up and train recognizer(s)
+        Debug.Log("Knn learning started!");
         knn = new KNearestNeighbors(k: 9);      // TEST FOR K!!!
         knn.Learn(train_inputs, train_outputs);
+        Debug.Log("Knn learning function finished!");
 
         var teacher = new MultilabelSupportVectorLearning<Gaussian>()       // We could test different evaluation methods (Linear, etc.)
         {
