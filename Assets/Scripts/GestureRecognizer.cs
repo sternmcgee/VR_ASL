@@ -80,8 +80,12 @@ public class GestureRecognizer : MonoBehaviour
 
     // Get current hand sensor readings
     private double[] getHandData(Hand hand)
-    {
+    {    
         List<double> data = new List<double>();
+
+        //return if hand not assigned in start() yet
+        if (handInterface == null)
+            return data.ToArray();
 
         for (int i = 0; i < (int)Bones.NumOfHI5Bones - 1; ++i)
         {
@@ -146,10 +150,16 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get SVM  decision response; return true if gesture matches
-    public bool svmIsGesture(Hand hand, int gesture)
+    public bool svmIsGesture(Hand hand, char gesture)
     {
         double[] data = getHandData(hand);
-        return svm.Decide(data, (int)gesture);
+
+        Gesture g;
+        Enum.TryParse(gesture.ToString(), out g);
+        //int realGest = (int)g;
+
+        //Debug.Log(data.ToString());
+        return svm.Decide(data, (int)g);
     }
 
 
