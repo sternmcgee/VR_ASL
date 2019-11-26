@@ -15,6 +15,7 @@ public class MainMenu2 : MonoBehaviour
     public GameObject FallingLetters;
     public GameObject ThrowingHands;
     public GameObject Calibration;
+    public GameObject Player;
     
     //public GameObject BackToMainMenu;
 
@@ -22,7 +23,9 @@ public class MainMenu2 : MonoBehaviour
     void Start()
     {
         //anim = GetComponent<Animator>();
+        Time.timeScale = 1;
         MainScreenPanel.SetActive(true);
+        Player.SetActive(true);
 
         //new key
         PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
@@ -54,6 +57,8 @@ public class MainMenu2 : MonoBehaviour
         //enable respective panel
         //StartGameOptionsPanel.SetActive(true);
         LectureTransition.SetActive(true);
+        //Player.SetActive(false);
+        //Destroy(Player);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");
@@ -70,6 +75,7 @@ public class MainMenu2 : MonoBehaviour
         //enable respective panel
         StartGameOptionsPanel.SetActive(false);
         FallingLetters.SetActive(true);
+        //Player.SetActive(false);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");
@@ -86,6 +92,7 @@ public class MainMenu2 : MonoBehaviour
         //enable respective panel
         StartGameOptionsPanel.SetActive(false);
         ThrowingHands.SetActive(true);
+        //Player.SetActive(false);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");
@@ -97,7 +104,7 @@ public class MainMenu2 : MonoBehaviour
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
     }
 
-    public void openLecture()
+    /*public void openLecture()
     {
         //enable respective panel
         StartGameOptionsPanel.SetActive(true);
@@ -111,7 +118,7 @@ public class MainMenu2 : MonoBehaviour
 
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
-    }
+    }*/
 
     public void openCalibration()
     {

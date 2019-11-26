@@ -9,8 +9,8 @@ public class Hi5InteractionSceneManager : SingletonBehaviour<Hi5InteractionScene
 {
     void Awake()
     {
-         DontDestroy();
-         Application.runInBackground = true;
+         //DontDestroy();
+         //Application.runInBackground = true;
     }
     void Update()
     { 
