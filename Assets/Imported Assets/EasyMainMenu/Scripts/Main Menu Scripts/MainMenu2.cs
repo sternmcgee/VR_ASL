@@ -57,7 +57,8 @@ public class MainMenu2 : MonoBehaviour
         //enable respective panel
         //StartGameOptionsPanel.SetActive(true);
         LectureTransition.SetActive(true);
-        Player.SetActive(false);
+        //Player.SetActive(false);
+        //Destroy(Player);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");
@@ -74,7 +75,7 @@ public class MainMenu2 : MonoBehaviour
         //enable respective panel
         StartGameOptionsPanel.SetActive(false);
         FallingLetters.SetActive(true);
-        Player.SetActive(false);
+        //Player.SetActive(false);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");
@@ -91,7 +92,7 @@ public class MainMenu2 : MonoBehaviour
         //enable respective panel
         StartGameOptionsPanel.SetActive(false);
         ThrowingHands.SetActive(true);
-        Player.SetActive(false);
+        //Player.SetActive(false);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");

@@ -135,7 +135,7 @@ PrefabInstance:
     - target: {fileID: 2656023283800552334, guid: ff85f8b29d4e30c4c8277dede0509b72,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2656023283800884214, guid: ff85f8b29d4e30c4c8277dede0509b72,
         type: 3}
@@ -202,6 +202,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 933388971}
+    - target: {fileID: 2686702235870477276, guid: ff85f8b29d4e30c4c8277dede0509b72,
+        type: 3}
+      propertyPath: doNotDestroy
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff85f8b29d4e30c4c8277dede0509b72, type: 3}
 --- !u!1 &26514742
@@ -7786,7 +7791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2045496353
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8036,7 +8041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2129535330
 MonoBehaviour:
   m_ObjectHideFlags: 0
