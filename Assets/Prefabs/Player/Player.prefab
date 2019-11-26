@@ -9046,6 +9046,7 @@ GameObject:
   - component: {fileID: 2656023283810853626}
   - component: {fileID: 2174208405558084240}
   - component: {fileID: 2174208405558084241}
+  - component: {fileID: 656941824}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9125,6 +9126,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23fe36c4025eed64ab15c08b2ca8071a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &656941824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656023283800552334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b218062636ea3e74ba004423f107ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2656023283800552928
@@ -9225,14 +9238,14 @@ MonoBehaviour:
   size: 0
   color: {r: 0, g: 1, b: 1, a: 0.922}
   vertices:
-  - {x: 1.0000005, y: 0.01, z: -0.9500004}
-  - {x: -1.0000005, y: 0.01, z: -0.9500004}
-  - {x: -1.0000005, y: 0.01, z: 0.9500004}
-  - {x: 1.0000005, y: 0.01, z: 0.9500004}
-  - {x: 0.9300005, y: 0.01, z: -0.8800004}
-  - {x: -0.9300005, y: 0.01, z: -0.8800004}
-  - {x: -0.9300005, y: 0.01, z: 0.8800004}
-  - {x: 0.9300005, y: 0.01, z: 0.8800004}
+  - {x: 1.6999996, y: 0.01, z: -1.1000001}
+  - {x: -1.6999996, y: 0.01, z: -1.1000001}
+  - {x: -1.6999996, y: 0.01, z: 1.1000001}
+  - {x: 1.6999996, y: 0.01, z: 1.1000001}
+  - {x: 1.6299995, y: 0.01, z: -1.0300001}
+  - {x: -1.6299995, y: 0.01, z: -1.0300001}
+  - {x: -1.6299995, y: 0.01, z: 1.0300001}
+  - {x: 1.6299995, y: 0.01, z: 1.0300001}
 --- !u!1 &2656023283800554566
 GameObject:
   m_ObjectHideFlags: 0
