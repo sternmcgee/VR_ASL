@@ -138,27 +138,22 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get kNN decision response; return true if gesture matches
-    public bool knnIsGesutre(Hand hand, int gesture)
+    public bool knnIsGesutre(Hand hand, char gesture)
     {
         double[] data = getHandData(hand);
+        Gesture g;
+        Enum.TryParse(gesture.ToString(), out g);
 
-        if (gesture == knn.Decide(data))
-        {
-            return true;
-        }
-        return false;
+        return g == knn.Decide(data);
     }
 
     // Get SVM  decision response; return true if gesture matches
     public bool svmIsGesture(Hand hand, char gesture)
     {
         double[] data = getHandData(hand);
-
         Gesture g;
         Enum.TryParse(gesture.ToString(), out g);
-        //int realGest = (int)g;
 
-        //Debug.Log(data.ToString());
         return svm.Decide(data, (int)g);
     }
 
@@ -176,7 +171,7 @@ public class GestureRecognizer : MonoBehaviour
         knn.Learn(train_inputs, train_outputs);
         Debug.Log("Knn learning function finished!");
 
-        var teacher = new MultilabelSupportVectorLearning<Linear>()       // We could test different evaluation methods (Linear, etc.)
+        var teacher = new MultilabelSupportVectorLearning<Linear>()
         {
             Learner = (p) => new LinearDualCoordinateDescent()
             {
