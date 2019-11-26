@@ -601,6 +601,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2656023283800552334, guid: ff85f8b29d4e30c4c8277dede0509b72,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2656023283800884214, guid: ff85f8b29d4e30c4c8277dede0509b72,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6563,7 +6568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a6a70209b6e6345bfe18b02314a54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: Virtual Classroom
+  levelName: MainMenu7
   internalProcessPath: 
   internalProcessArgs: 
   loadAdditive: 0

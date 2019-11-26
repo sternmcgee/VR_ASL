@@ -15,7 +15,8 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		void Awake()
 		{
-			DontDestroyOnLoad( this );
+            //DontDestroyOnLoad( this );
+            Destroy(this);
 		}
 	}
 }
