@@ -144,7 +144,7 @@ public class GestureRecognizer : MonoBehaviour
         Gesture g;
         Enum.TryParse(gesture.ToString(), out g);
 
-        return g == knn.Decide(data);
+        return g == (Gesture)(knn.Decide(data));
     }
 
     // Get SVM  decision response; return true if gesture matches

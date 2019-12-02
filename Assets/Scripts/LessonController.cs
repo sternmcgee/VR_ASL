@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class LessonController : MonoBehaviour
 {
     public GestureRecognizer recognizer;
+    public Hand rHand = null;
+    public Hi5_Interaction_Core.Hi5_Hand_Visible_Hand visibleHand = null;
     LetterController letterDisplay;
     //time in ms between gesture read calls
     public float timeInterval = 5f;
@@ -58,6 +61,8 @@ public class LessonController : MonoBehaviour
                 if (gestureCount > 7)
                 {
                     correctGesture = true;
+                    rHand.TriggerHapticPulse(5000);
+                    visibleHand.ChangeColor(Color.green);
                     Debug.Log("Correct Gesture");
                 }
                 else
@@ -65,10 +70,11 @@ public class LessonController : MonoBehaviour
 
                 gestureCount = 0;
                 counter = 0;
-                Debug.Log("Gesture read loop ended!");
+                //Debug.Log("Gesture read loop ended!");
             }                
             
             yield return new WaitForSeconds(waitTime);
+            visibleHand.ChangeColor(visibleHand.orgColor);
         }
        
     }
@@ -76,6 +82,9 @@ public class LessonController : MonoBehaviour
 
     void Start()
     {
+        if (rHand == null)
+            Debug.LogError("Hand component not assigned to this script!");
+
         letterDisplay = this.GetComponent<LetterController>();
         letterDisplay.Display(lessonPlan[0]);
         state = LessonState.Lesson;
