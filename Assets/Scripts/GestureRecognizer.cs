@@ -32,17 +32,17 @@ public class GestureRecognizer : MonoBehaviour
     private HI5_Glove_TransformData_Interface handInterface;
 
     // Methods for recognition
-    private KNearestNeighbors knn = null;
-    private MultilabelSupportVectorMachine<Linear> svm = null;
+    //private KNearestNeighbors knn = null;
+    //private MultilabelSupportVectorMachine<Linear> svm = null;
     private MultilabelSupportVectorMachine<Linear> svmLeft = null;
     private MultilabelSupportVectorMachine<Linear> svmRight = null;
 
-    private string dataPath = "Assets/Scripts/Data/";
+    //private string dataPath = "Assets/Scripts/Data/";
     private string leftDataPath = "Assets/Scripts/Data/Left/";
     private string rightDataPath = "Assets/Scripts/Data/Right/";
 
-    private static double[][] train_inputs;
-    private static int[] train_outputs;
+    //private static double[][] train_inputs;
+    //private static int[] train_outputs;
     private static double[][] leftTrainInputs;
     private static int[] leftTrainOutputs;
     private static double[][] rightTrainInputs;
@@ -50,7 +50,7 @@ public class GestureRecognizer : MonoBehaviour
 
 
     // Read training data into train_input and train_output
-    private static void readData(string path)
+    /*private static void readData(string path)
     {
         List<List<double>> inputs = new List<List<double>>();
         List<Gesture> outputs = new List<Gesture>();
@@ -84,9 +84,9 @@ public class GestureRecognizer : MonoBehaviour
 
         train_inputs = inputs.Select(x => x.ToArray()).ToArray();
         train_outputs = outputs.Select(x => (int)x).ToArray();      //tranform gestures into integers representations
-    }
+    }*/
 
-    private static void readBulkData(string path, Hand hand)
+    private static void readData(string path, Hand hand)
     {
         List<List<double>> inputs = new List<List<double>>();
         List<Gesture> outputs = new List<Gesture>();
@@ -169,11 +169,11 @@ public class GestureRecognizer : MonoBehaviour
     }
 
     // Get current gesture (via kNN approach)
-    public int knnGetGesture(Hand hand)
+    /*public int knnGetGesture(Hand hand)
     {
         double[] data = getHandData(hand);
         return knn.Decide(data);
-    }
+    }*/
 
     // Get current gesture (via SVM approach; lame)
     public int svmGetGesture(Hand hand)
@@ -181,23 +181,33 @@ public class GestureRecognizer : MonoBehaviour
         double[] data = getHandData(hand);
         foreach(Gesture gesture in Enum.GetValues(typeof(Gesture)))
         {
-            if(svm.Decide(data, (int)gesture))
+            if (hand == Hand.LEFT)
             {
-                return (int)gesture;
+                if (svmLeft.Decide(data, (int)gesture))
+                {
+                    return (int)gesture;
+                }
+            }
+            else if (hand == Hand.RIGHT)
+            {
+                if (svmRight.Decide(data, (int)gesture))
+                {
+                    return (int)gesture;
+                }
             }
         }
         return 0;       // return 'None' if nothing works
     }
 
     // Get kNN decision response; return true if gesture matches
-    public bool knnIsGesutre(Hand hand, char gesture)
+    /*public bool knnIsGesutre(Hand hand, char gesture)
     {
         double[] data = getHandData(hand);
         Gesture g;
         Enum.TryParse(gesture.ToString(), out g);
 
         return g == (Gesture)(knn.Decide(data));
-    }
+    }*/
 
     // Get SVM  decision response; return true if gesture matches
     public bool svmIsGesture(Hand hand, char gesture)
@@ -214,10 +224,7 @@ public class GestureRecognizer : MonoBehaviour
         {
             return svmRight.Decide(data, (int)g);
         }
-        else
-        {
-            return svmRight.Decide(data, (int)g);
-        }
+        return false;       // default return false
     }
 
 
@@ -226,8 +233,8 @@ public class GestureRecognizer : MonoBehaviour
     {
         handInterface = HI5_Glove_TransformData_Interface.Instance;
 
-        readBulkData(leftDataPath, Hand.LEFT);
-        readBulkData(rightDataPath, Hand.RIGHT);
+        readData(leftDataPath, Hand.LEFT);
+        readData(rightDataPath, Hand.RIGHT);
 
         // Set up and train recognizer(s)
         /*Debug.Log("Knn learning started!");
@@ -261,7 +268,7 @@ public class GestureRecognizer : MonoBehaviour
         // comment this out when not needed
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            Debug.Log("kNN right gesture: " + (Gesture)knnGetGesture(Hand.RIGHT));
+            //Debug.Log("kNN right gesture: " + (Gesture)knnGetGesture(Hand.RIGHT));
             Debug.Log("SVM right gesture: " + (Gesture)svmGetGesture(Hand.RIGHT));
         }        
     }
