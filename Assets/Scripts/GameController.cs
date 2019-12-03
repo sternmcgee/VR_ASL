@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class GameController : MonoBehaviour
 {
+    public GestureRecognizer recognizer;
+    public Hand rHand = null;
+    public Hi5_Interaction_Core.Hi5_Hand_Visible_Hand visibleHand = null;
+    private char returnedGesture = '0';
     public GameObject popfx;
     public GameObject letterPrefab;
     public GameObject[] spawnPoints;    //list of spawn points
-    public string[] allLetters;     //list of letters to spawn
+    public char[] allLetters;     //list of letters to spawn
     public int numSpawns;
 
     private GameObject[] spawnedObjects;
-    private string[] spawnedLetters;
+    private char[] spawnedLetters;
 
     public GameObject scoreObject;
     private SimpleHelvetica scoreDisplay;
@@ -22,11 +27,72 @@ public class GameController : MonoBehaviour
     void Start()
     {
         spawnedObjects = new GameObject[numSpawns];
-        spawnedLetters = new string[numSpawns];
+        spawnedLetters = new char[numSpawns];
         scoreDisplay = scoreObject.GetComponent<SimpleHelvetica>();
         score = 0;
 
         StartCoroutine(RunGame());
+        StartCoroutine(GestureLoop());
+    }
+
+
+    private IEnumerator GestureLoop()
+    {
+        float waitTime = 5f / 1000f;
+
+        while(true)
+        {
+
+            Debug.Log("Start Loop");
+            IDictionary<char, int> readings = new Dictionary<char, int>();
+            for(int i = 0; i < allLetters.Length; i++)
+            {
+                if(spawnedLetters[i] != '0')
+                readings[spawnedLetters[i]] = 0;
+            }
+
+            for(int i = 0; i < 10; i++)
+            {
+                foreach(char letter in allLetters)
+                {
+                    if(recognizer.svmIsGesture(HI5.Hand.RIGHT, letter) )
+                    {
+                        readings[letter]++;
+                    }
+                }
+                Debug.Log(readings);
+                yield return new WaitForSeconds(waitTime);
+            }
+            
+            foreach(char letter in readings.Keys)
+            {
+                if(readings[letter] > 7)
+                {
+                    returnedGesture = letter;
+                    rHand.TriggerHapticPulse(5000);
+                    visibleHand.ChangeColor(Color.green);
+                    Debug.Log("Returned letter " + letter);
+
+                    for(int i = 0; i < spawnedLetters.Length; i++)
+                    {
+                        if(spawnedLetters[i] == letter)
+                        {
+                            spawnedLetters[i] = '0';
+                            StartCoroutine(Pop(spawnedObjects[i]));
+                            spawnedObjects[i] = null;
+                            score += 1;
+                        }
+                    }
+                } else
+                {
+                    returnedGesture = '0';
+                    visibleHand.ChangeColor(visibleHand.orgColor);
+                }
+            }
+
+            //yield return null;
+            //yield return new WaitForSeconds(waitTime);
+        }
     }
 
 
@@ -40,8 +106,8 @@ public class GameController : MonoBehaviour
             GameObject newLetter = Object.Instantiate(letterPrefab);
             spawnedObjects[i] = newLetter;
             SimpleHelvetica newScript = newLetter.GetComponent<SimpleHelvetica>();
-            string letter = allLetters[Random.Range(0, allLetters.Length)];
-            newScript.Text = letter;
+            char letter = allLetters[Random.Range(0, allLetters.Length)];
+            newScript.Text = letter.ToString();
             spawnedLetters[i] = letter;
             newScript.GenerateText();
 
@@ -63,22 +129,22 @@ public class GameController : MonoBehaviour
         scoreDisplay.Text = scoreString + score + '/' + numSpawns;
         scoreDisplay.GenerateText();
         
-        for(int i = 0; i < spawnedLetters.Length; i++)
-        {
-            string str = spawnedLetters[i];
-            if(str != null)
-            {
-                if(Input.GetKeyDown(str.ToLower()))
-                {
-                    //Destroy(spawnedObjects[i]);
-                    StartCoroutine(Pop(spawnedObjects[i]));
-                    spawnedObjects[i] = null;
-                    spawnedLetters[i] = null;
-                    score += 1;
-                    return;
-                }
-            }
-        }
+        //for(int i = 0; i < spawnedLetters.Length; i++)
+        //{
+        //    string str = spawnedLetters[i];
+        //    if(str != null)
+        //    {
+        //        if(Input.GetKeyDown(str.ToLower()))
+        //        {
+        //            //Destroy(spawnedObjects[i]);
+        //            StartCoroutine(Pop(spawnedObjects[i]));
+        //            spawnedObjects[i] = null;
+        //            spawnedLetters[i] = null;
+        //            score += 1;
+        //            return;
+        //        }
+        //    }
+        //}
     }
 
 
@@ -92,7 +158,7 @@ public class GameController : MonoBehaviour
                 //Destroy(spawnedObjects[i]);
                 StartCoroutine(Pop(spawnedObjects[i]));
                 spawnedObjects[i] = null;
-                spawnedLetters[i] = null;
+                spawnedLetters[i] = '0';
             }
         }
     }
