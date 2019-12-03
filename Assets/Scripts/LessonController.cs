@@ -5,6 +5,7 @@ using Valve.VR.InteractionSystem;
 
 public class LessonController : MonoBehaviour
 {
+    public bool bypassLetter = false;
     public bool leftHanded = false;
     private HI5.Hand hand;
     public GestureRecognizer recognizer;
@@ -117,27 +118,41 @@ public class LessonController : MonoBehaviour
         {
             case LessonState.Lesson:
                 //if(Input.GetKeyDown(lessonPlan[lessonIndex].ToString().ToLower()))
-                if (correctGesture)
+                if (correctGesture || bypassLetter)
                 {
-                    state = LessonState.Practice;
-                    letterDisplay.TextOnly(lessonPlan[lessonIndex]);
-                    hint = Hint(lessonPlan[lessonIndex]);
-                    StartCoroutine(hint);
                     correctGesture = false;
+                    bypassLetter = false;
+                    lessonIndex++;
+                    Debug.Log("Lesson index " + lessonIndex);
+                    if(lessonIndex < lessonPlan.Length)
+                    {
+                        state = LessonState.Practice;
+                        letterDisplay.Display(lessonPlan[lessonIndex]);
+                    } else
+                    {
+                        lessonIndex = 0;
+                        state = LessonState.Practice;
+                        letterDisplay.TextOnly(lessonPlan[lessonIndex]);
+                    }
+                    //hint = Hint(lessonPlan[lessonIndex]);
+                    //StartCoroutine(hint);
                 }
                 break;
             case LessonState.Practice:
-                if (correctGesture)
+                if (correctGesture || bypassLetter)
                 //if(Input.GetKeyDown(lessonPlan[lessonIndex].ToString().ToLower()))
                 {
                     correctGesture = false;
+                    bypassLetter = false;
                     StopCoroutine(hint);
                     lessonIndex++;
                     Debug.Log("Lesson index " + lessonIndex);
                     if(lessonIndex < lessonPlan.Length)
                     {
-                        state = LessonState.Lesson;
-                        letterDisplay.Display(lessonPlan[lessonIndex]);
+                        //state = LessonState.Lesson;
+                        letterDisplay.TextOnly(lessonPlan[lessonIndex]);
+                        hint = Hint(lessonPlan[lessonIndex]);
+                        StartCoroutine(hint);
                     } else
                     {
                         state = LessonState.Quiz;
@@ -147,9 +162,10 @@ public class LessonController : MonoBehaviour
                 break;
             case LessonState.Quiz:
                 //if (Input.GetKeyDown(quizPlan[quizIndex].ToString().ToLower()))
-                    if (correctGesture)
+                    if (correctGesture || bypassLetter)
                     {
                         correctGesture = false;
+                        bypassLetter = false;
                         quizIndex++;
                         Debug.Log("Quiz index " + quizIndex);
                         if (quizIndex < quizPlan.Length)
