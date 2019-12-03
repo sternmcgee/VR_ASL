@@ -41,6 +41,13 @@ public class LessonController : MonoBehaviour
         StartCoroutine(ReadGesture());
     }
 
+    private IEnumerator ChangeHandColor()
+    {
+        visibleHand.ChangeColor(Color.green);
+        yield return new WaitForSeconds(0.5f);
+        visibleHand.ChangeColor(visibleHand.orgColor);
+    }
+
     private IEnumerator ReadGesture()
     {
         float waitTime = timeInterval / 1000f;
@@ -62,7 +69,7 @@ public class LessonController : MonoBehaviour
                 {
                     correctGesture = true;
                     rHand.TriggerHapticPulse(5000);
-                    visibleHand.ChangeColor(Color.green);
+                    StartCoroutine(ChangeHandColor());
                     Debug.Log("Correct Gesture");
                 }
                 else
@@ -74,7 +81,6 @@ public class LessonController : MonoBehaviour
             }                
             
             yield return new WaitForSeconds(waitTime);
-            visibleHand.ChangeColor(visibleHand.orgColor);
         }
        
     }
