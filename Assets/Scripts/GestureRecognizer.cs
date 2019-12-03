@@ -34,11 +34,19 @@ public class GestureRecognizer : MonoBehaviour
     // Methods for recognition
     private KNearestNeighbors knn = null;
     private MultilabelSupportVectorMachine<Linear> svm = null;
+    private MultilabelSupportVectorMachine<Linear> svmLeft = null;
+    private MultilabelSupportVectorMachine<Linear> svmRight = null;
 
     private string dataPath = "Assets/Scripts/Data/";
+    private string leftDataPath = "Assets/Scripts/Data/Left/";
+    private string rightDataPath = "Assets/Scripts/Data/Right/";
 
     private static double[][] train_inputs;
     private static int[] train_outputs;
+    private static double[][] leftTrainInputs;
+    private static int[] leftTrainOutputs;
+    private static double[][] rightTrainInputs;
+    private static int[] rightTrainOutputs;
 
 
     // Read training data into train_input and train_output
@@ -76,6 +84,50 @@ public class GestureRecognizer : MonoBehaviour
 
         train_inputs = inputs.Select(x => x.ToArray()).ToArray();
         train_outputs = outputs.Select(x => (int)x).ToArray();      //tranform gestures into integers representations
+    }
+
+    private static void readBulkData(string path, Hand hand)
+    {
+        List<List<double>> inputs = new List<List<double>>();
+        List<Gesture> outputs = new List<Gesture>();
+
+        var files = Directory.EnumerateFiles(path, "*.csv");
+        foreach (string file in files)
+        {
+            using (var reader = new StreamReader(file))
+            {
+                var header = reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    List<double> entry = new List<double>();
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+
+                    for (int i = 0; i < values.Length - 1; ++i)      //omit the label value
+                    {
+                        entry.Add(Convert.ToDouble(values[i]));
+                    }
+
+                    inputs.Add(entry);
+
+                    // parse gesture and add to list
+                    Gesture gesture;
+                    Enum.TryParse(values[values.Length - 1], out gesture);
+                    outputs.Add(gesture);
+                }
+            }
+        }
+
+        if(hand == Hand.LEFT)
+        {
+            leftTrainInputs = inputs.Select(x => x.ToArray()).ToArray();
+            leftTrainOutputs = outputs.Select(x => (int)x).ToArray();
+        }
+        else if(hand == Hand.RIGHT)
+        {
+            rightTrainInputs = inputs.Select(x => x.ToArray()).ToArray();
+            rightTrainOutputs = outputs.Select(x => (int)x).ToArray();
+        }
     }
 
     // Get current hand sensor readings
@@ -154,7 +206,18 @@ public class GestureRecognizer : MonoBehaviour
         Gesture g;
         Enum.TryParse(gesture.ToString(), out g);
 
-        return svm.Decide(data, (int)g);
+        if(hand == Hand.LEFT)
+        {
+            return svmLeft.Decide(data, (int)g);
+        }
+        if(hand == Hand.RIGHT)
+        {
+            return svmRight.Decide(data, (int)g);
+        }
+        else
+        {
+            return svmRight.Decide(data, (int)g);
+        }
     }
 
 
@@ -163,15 +226,16 @@ public class GestureRecognizer : MonoBehaviour
     {
         handInterface = HI5_Glove_TransformData_Interface.Instance;
 
-        readData(dataPath);
+        readBulkData(leftDataPath, Hand.LEFT);
+        readBulkData(rightDataPath, Hand.RIGHT);
 
         // Set up and train recognizer(s)
-        Debug.Log("Knn learning started!");
+        /*Debug.Log("Knn learning started!");
         knn = new KNearestNeighbors(k: 9);      // TEST FOR K!!!
         knn.Learn(train_inputs, train_outputs);
-        Debug.Log("Knn learning function finished!");
+        Debug.Log("Knn learning function finished!");*/
 
-        var teacher = new MultilabelSupportVectorLearning<Linear>()
+        var leftTeacher = new MultilabelSupportVectorLearning<Linear>()
         {
             Learner = (p) => new LinearDualCoordinateDescent()
             {
@@ -179,7 +243,16 @@ public class GestureRecognizer : MonoBehaviour
             }
         };
 
-        svm = teacher.Learn(train_inputs, train_outputs);
+        var rightTeacher = new MultilabelSupportVectorLearning<Linear>()
+        {
+            Learner = (p) => new LinearDualCoordinateDescent()
+            {
+                Loss = Loss.L2
+            }
+        };
+
+        svmLeft = leftTeacher.Learn(leftTrainInputs, leftTrainOutputs);
+        svmRight = rightTeacher.Learn(rightTrainInputs, rightTrainOutputs);
     }
 
     // Update is called once per frame
