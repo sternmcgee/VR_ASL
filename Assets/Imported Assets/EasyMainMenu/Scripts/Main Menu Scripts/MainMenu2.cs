@@ -152,6 +152,7 @@ public class MainMenu2 : MonoBehaviour
         //StartGameOptionsPanel.SetActive(true);
         MainScreenPanel.SetActive(true);
         StartGameOptionsPanel.SetActive(false);
+        ChoosingGamePanel.SetActive(false);
 
         //play anim for opening main options panel
         //anim.Play("buttonTweenAnims_on");
