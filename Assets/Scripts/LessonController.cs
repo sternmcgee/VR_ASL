@@ -5,6 +5,8 @@ using Valve.VR.InteractionSystem;
 
 public class LessonController : MonoBehaviour
 {
+    public bool leftHanded = false;
+    private HI5.Hand hand;
     public GestureRecognizer recognizer;
     public Hand rHand = null;
     public Hi5_Interaction_Core.Hi5_Hand_Visible_Hand visibleHand = null;
@@ -57,7 +59,7 @@ public class LessonController : MonoBehaviour
         while (true)
         {
             char letter = (state == LessonState.Quiz) ? quizPlan[quizIndex] : lessonPlan[lessonIndex];
-            if(recognizer.svmIsGesture(HI5.Hand.RIGHT, letter) || recognizer.svmIsGesture(HI5.Hand.LEFT, letter))
+            if(recognizer.svmIsGesture(hand, letter) )
             {
                 gestureCount++;
             }
@@ -90,6 +92,14 @@ public class LessonController : MonoBehaviour
     {
         if (rHand == null)
             Debug.LogError("Hand component not assigned to this script!");
+
+        if(leftHanded)
+        {
+            hand = HI5.Hand.LEFT;
+        } else
+        {
+            hand = HI5.Hand.RIGHT;
+        }
 
         letterDisplay = this.GetComponent<LetterController>();
         letterDisplay.Display(lessonPlan[0]);

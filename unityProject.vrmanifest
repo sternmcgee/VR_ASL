@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.vr_asl.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\Stern\\VR_ASL\\actions.json",
+      "action_manifest_path": "C:\\Users\\jcham\\Documents\\Git\\_capstone\\VR_ASL\\actions.json",
       "strings": {
         "en_us": {
           "name": "VR_ASL [Testing]"

@@ -119,7 +119,7 @@ public class GloveRecorder : MonoBehaviour
         //int currentGesture = 0;     //maps to Gesture.None
 
         //Used for changing the gesture being recorded
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) //Cycle previous gesture
         {
             if (currentGesture == 0)
             {
@@ -132,7 +132,7 @@ public class GloveRecorder : MonoBehaviour
                 Debug.Log("Gesture back. Current gesture: " + ((Gesture)currentGesture).ToString());
             }
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow)) //Cycle next gesture
         {
             if (currentGesture == Enum.GetValues(typeof(Gesture)).Length - 1)
             {
@@ -155,7 +155,7 @@ public class GloveRecorder : MonoBehaviour
                 initializeWriter(hand, (Gesture)currentGesture);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.L))
+        else if (Input.GetKeyDown(KeyCode.L))       // Left hand
         {
             if (!recording)
             {
